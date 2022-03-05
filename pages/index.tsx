@@ -1,3 +1,4 @@
+import React from 'react';
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -27,7 +28,7 @@ const Home: NextPage = () => {
             <h2>Documentation &rarr;</h2>
             <p>Find in-depth information about Next.js features and API.</p>
           </a>
-
+          <button className="btn btn-primary">Đẹp</button>
           <a href="https://nextjs.org/learn" className={styles.card}>
             <h2>Learn &rarr;</h2>
             <p>Learn about Next.js in an interactive course with quizzes!</p>
