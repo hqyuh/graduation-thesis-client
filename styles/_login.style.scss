@@ -1,0 +1,21 @@
+.login-form {
+  .title {
+    color: #8f60de;
+  }
+  max-width: 420px;
+  .form-group {
+    input {
+      border: none;
+      width: 100% !important;
+      &:focus {
+        outline: none !important;
+      }
+    }
+    a:hover {
+      color: #8f60de;
+    }
+  }
+  .forgot-password {
+    color: #8f60de !important;
+  }
+}
