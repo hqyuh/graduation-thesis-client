@@ -3,6 +3,10 @@
 @import './custom/bootstrap.custom';
 @import '~bootstrap/scss/bootstrap';
 @import './login.style.scss';
+@import "primereact/resources/primereact.min.css";                  //core css
+@import "primeicons/primeicons.css"; 
+@import "primereact/resources/themes/saga-blue/theme.css"; 
+@import './components/input';
 html,
 body {
   width: 100%;
