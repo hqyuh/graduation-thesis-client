@@ -4,24 +4,24 @@ import { InputText } from 'primereact/inputtext'
 import Link from 'next/link'
 import { NextPage } from 'next'
 import { Password } from 'primereact/password'
-import { useFormik } from 'formik'
 import { FaceBookIcon } from '../icons'
 import GoogleIcon from '../icons/GoogleIcon'
 import { useTranslations } from '../context/Localization'
-import { UserSignIn } from '../context/auth/auth.types'
 
-const initialValues: UserSignIn = {
-  email: '',
-  password: '',
-}
 
 const Login: NextPage = () => {
+ 
   const { t } = useTranslations()
-  const formik = useFormik<UserSignIn>({initialValues, onSubmit: console.log});
   return (
     <div className="container">
       <div className="login-form text-center m-auto card px-5 rounded-15 pb-5">
-        <div className="title font-size-50 mt-5 mb-2 font-weight-900">{t('login')}</div>
+        <div className="title font-size-50 mt-5 mb-2 font-weight-900">{t('register')}</div>
+        <div className="mt-3 mb-3">
+          <InputText placeholder="First Name" className="p-inputtext text" />
+        </div>
+        <div className="mt-3 mb-3">
+          <InputText placeholder="Last Name" className="p-inputtext text" />
+        </div>
         <div className="mt-3 mb-3">
           <InputText placeholder="Email" className="p-inputtext text" />
         </div>
@@ -36,7 +36,7 @@ const Login: NextPage = () => {
         </div>
         <div className="form-group">
           <button className="w-100 btn btn-primary mt-4 mb-2 text-white font-weight-900" type="submit">
-            {t('signin')}
+            {t('signup')}
           </button>
         </div>
         <div className=" text-end mb-3">
