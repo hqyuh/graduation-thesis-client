@@ -1,14 +1,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react'
-import { InputText } from 'primereact/inputtext'
-import Link from 'next/link'
-import { NextPage } from 'next'
-import { Password } from 'primereact/password'
 import { useFormik } from 'formik'
+import { NextPage } from 'next'
+import Link from 'next/link'
+import { Password } from 'primereact/password'
+import React from 'react'
+import InputWrapper from '../components/InputText'
+import { UserSignIn } from '../context/auth/auth.types'
+import { useTranslations } from '../context/Localization'
 import { FaceBookIcon } from '../icons'
 import GoogleIcon from '../icons/GoogleIcon'
-import { useTranslations } from '../context/Localization'
-import { UserSignIn } from '../context/auth/auth.types'
 
 const initialValues: UserSignIn = {
   email: '',
@@ -17,13 +17,15 @@ const initialValues: UserSignIn = {
 
 const Login: NextPage = () => {
   const { t } = useTranslations()
-  const formik = useFormik<UserSignIn>({initialValues, onSubmit: console.log});
+  const formik = useFormik<UserSignIn>({initialValues, onSubmit: (value)=> console.log(value)});
+  const {handleChange, handleSubmit} = formik;
+  
   return (
     <div className="container">
       <div className="login-form text-center m-auto card px-5 rounded-15 pb-5">
         <div className="title font-size-50 mt-5 mb-2 font-weight-900">{t('login')}</div>
         <div className="mt-3 mb-3">
-          <InputText placeholder="Email" className="p-inputtext text" />
+          <InputWrapper placeholder="Email" className="p-inputtext text" onChange={handleChange} name="email" formik={formik}/>
         </div>
         <div className="mt-3 mb-3">
           <Password
@@ -32,10 +34,12 @@ const Login: NextPage = () => {
             className="password"
             inputClassName="w-100 text"
             toggleMask
+            onChange={handleChange}
+            name="password"
           />
         </div>
         <div className="form-group">
-          <button className="w-100 btn btn-primary mt-4 mb-2 text-white font-weight-900" type="submit">
+          <button className="w-100 btn btn-primary mt-4 mb-2 text-white font-weight-900" type="submit" onClick={handleSubmit}>
             {t('signin')}
           </button>
         </div>
