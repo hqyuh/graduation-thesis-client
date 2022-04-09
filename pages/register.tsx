@@ -44,22 +44,6 @@ const Login: NextPage = () => {
             <a className="forgot-password">Forgot Password?</a>
           </Link>
         </div>
-        <div className="form-group mt-3 mb-1 p-1 rounded-8 row">
-          <div className="col-4 text-end">
-            <FaceBookIcon />
-          </div>
-          <div className="col-8 text-start d-flex align-items-center font-size-12">
-            <a>Sign up with Facebook</a>
-          </div>
-        </div>
-        <div className="form-group mt-1 mb-3 p-1 rounded-8 row">
-          <div className="col-4 text-end">
-            <GoogleIcon />
-          </div>
-          <div className="col-8 text-start d-flex align-items-center font-size-12">
-            <a type="button">Sign up with Google</a>
-          </div>
-        </div>
       </div>
     </div>
   )
