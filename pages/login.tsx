@@ -2,11 +2,13 @@
 import { FormikHelpers, useFormik } from 'formik'
 import { NextPage } from 'next'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { Password } from 'primereact/password'
 import React from 'react'
 import * as yup from 'yup'
 import InputWrapper from '../components/InputText'
 import { YUP_MESSAGE } from '../constants'
+import { useAuth } from '../context/auth/auth.provider'
 import { UserSignIn } from '../context/auth/auth.types'
 import { useTranslations } from '../context/Localization'
 import { FaceBookIcon } from '../icons'
@@ -24,7 +26,12 @@ const initialValues: UserSignIn = {
 
 const Login: NextPage = () => {
   const { t } = useTranslations()
-  const onSubmit = (value: UserSignIn, formikHelpers: FormikHelpers<UserSignIn>): void => {}
+  const { login } = useAuth()
+  const router = useRouter()
+  const onSubmit = (value: UserSignIn, formikHelpers: FormikHelpers<UserSignIn>): void => {
+    login(value)
+    router.replace('/')
+  }
   const formik = useFormik<UserSignIn>({
     initialValues,
     onSubmit,
@@ -33,7 +40,7 @@ const Login: NextPage = () => {
   const { handleChange, handleSubmit, errors } = formik
 
   return (
-    // <div className="container">
+    <div className="container mx-auto">
       <div className="login-form text-center m-auto card px-5 rounded-15 pb-5">
         <div className="title font-size-50 mt-5 mb-2 font-weight-900">{t('login')}</div>
         <div className="mt-3 mb-3">
@@ -88,7 +95,7 @@ const Login: NextPage = () => {
           </div>
         </div>
       </div>
-    // </div>
+    </div>
   )
 }
 export default Login
