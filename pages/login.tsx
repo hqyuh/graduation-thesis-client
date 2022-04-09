@@ -1,14 +1,21 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useFormik } from 'formik'
+import { FormikHelpers, useFormik } from 'formik'
 import { NextPage } from 'next'
 import Link from 'next/link'
 import { Password } from 'primereact/password'
 import React from 'react'
+import * as yup from 'yup'
 import InputWrapper from '../components/InputText'
+import { YUP_MESSAGE } from '../constants'
 import { UserSignIn } from '../context/auth/auth.types'
 import { useTranslations } from '../context/Localization'
 import { FaceBookIcon } from '../icons'
 import GoogleIcon from '../icons/GoogleIcon'
+
+const schema = yup.object().shape({
+  email: yup.string().email(YUP_MESSAGE.EMAIL).required(YUP_MESSAGE.REQUIRED),
+  password: yup.string().required(YUP_MESSAGE.REQUIRED),
+})
 
 const initialValues: UserSignIn = {
   email: '',
@@ -17,15 +24,26 @@ const initialValues: UserSignIn = {
 
 const Login: NextPage = () => {
   const { t } = useTranslations()
-  const formik = useFormik<UserSignIn>({initialValues, onSubmit: (value)=> console.log(value)});
-  const {handleChange, handleSubmit} = formik;
-  
+  const onSubmit = (value: UserSignIn, formikHelpers: FormikHelpers<UserSignIn>): void => {}
+  const formik = useFormik<UserSignIn>({
+    initialValues,
+    onSubmit,
+    validationSchema: schema,
+  })
+  const { handleChange, handleSubmit, errors } = formik
+
   return (
     // <div className="container">
       <div className="login-form text-center m-auto card px-5 rounded-15 pb-5">
         <div className="title font-size-50 mt-5 mb-2 font-weight-900">{t('login')}</div>
         <div className="mt-3 mb-3">
-          <InputWrapper placeholder="Email" className="p-inputtext text" onChange={handleChange} name="email" formik={formik}/>
+          <InputWrapper
+            placeholder="Email"
+            className="p-inputtext text"
+            onChange={handleChange}
+            name="email"
+            formik={formik}
+          />
         </div>
         <div className="mt-3 mb-3">
           <Password
@@ -37,9 +55,14 @@ const Login: NextPage = () => {
             onChange={handleChange}
             name="password"
           />
+          <p className="text-start font-size-12 text-danger mb-0 mt-1">{errors?.password}</p>
         </div>
         <div className="form-group">
-          <button className="w-100 btn btn-primary mt-4 mb-2 text-white font-weight-900" type="submit" onClick={handleSubmit}>
+          <button
+            className="w-100 btn btn-primary mt-4 mb-2 text-white font-weight-900"
+            type="submit"
+            onClick={handleSubmit}
+          >
             {t('signin')}
           </button>
         </div>
