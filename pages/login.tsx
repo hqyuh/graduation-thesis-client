@@ -21,7 +21,7 @@ const Login: NextPage = () => {
   const {handleChange, handleSubmit} = formik;
   
   return (
-    <div className="container">
+    // <div className="container">
       <div className="login-form text-center m-auto card px-5 rounded-15 pb-5">
         <div className="title font-size-50 mt-5 mb-2 font-weight-900">{t('login')}</div>
         <div className="mt-3 mb-3">
@@ -65,7 +65,7 @@ const Login: NextPage = () => {
           </div>
         </div>
       </div>
-    </div>
+    // </div>
   )
 }
 export default Login
