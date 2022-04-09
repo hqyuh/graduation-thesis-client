@@ -13,7 +13,7 @@ const InputWrapper: React.FC<InputTextProps & InputProps> = ({formik,...props}) 
     const error = formik?.errors[name || ''];
     return (<div>
         <InputText {...props}/>
-        <p className="font-size-10">
+        <p className="font-size-12 mb-0 text-danger text-start mt-1">
             {
                 error ?? ''
             }

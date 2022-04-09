@@ -17,6 +17,10 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
   background-color: white !important;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 a {
