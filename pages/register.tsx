@@ -8,9 +8,7 @@ import { FaceBookIcon } from '../icons'
 import GoogleIcon from '../icons/GoogleIcon'
 import { useTranslations } from '../context/Localization'
 
-
 const Login: NextPage = () => {
- 
   const { t } = useTranslations()
   return (
     <div className="container">
