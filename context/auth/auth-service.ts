@@ -1,13 +1,17 @@
 import { ApiResponse, axiosClient } from "../../lib/client";
-import { CurrentUserModel, UserSignIn } from './auth.types';
+import { CurrentUserModel, UserSignIn, UserSignUp } from './auth.types';
 
-const getCurrentUser = (): Promise<ApiResponse<CurrentUserModel>> => axiosClient.get('/user')
+const getCurrentUser = (): Promise<ApiResponse<CurrentUserModel>> => axiosClient.get('/user/me')
 
-const login = (user: UserSignIn): Promise<ApiResponse<CurrentUserModel>>  => axiosClient.post('/login',user)
+const login = (user: UserSignIn): Promise<ApiResponse<CurrentUserModel>>  => axiosClient.post('/user/login',user)
+
+const register = (user: UserSignUp): Promise<ApiResponse<CurrentUserModel>>  => axiosClient.post('/user/login',user)
+
 
 const authServices = {
     getCurrentUser,
     login,
+    register,
 }
 
 export default authServices

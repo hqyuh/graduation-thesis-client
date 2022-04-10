@@ -29,7 +29,10 @@ axiosClient.interceptors.response.use(
     if (response.data && response.data.type === ResponseMessage.ERROR) {
       return Promise.reject(response.data)
     }
-    saveToLocalStorage(ACCESS_TOKEN_KEY, response.headers.Authorization)
+    const responseToken = response.headers.Authorization
+    if(responseToken){
+      saveToLocalStorage(ACCESS_TOKEN_KEY, response.headers.Authorization)
+    }
     return response
   },
   (error) => {

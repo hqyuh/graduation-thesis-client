@@ -18,5 +18,6 @@ export interface CurrentUserModel extends Omit<UserSignUp, 'password'>{
 export interface AuthContextApi {
     currentUser: CurrentUserModel | null;
     error: any;
-    login: (user: UserSignIn) => Promise<void>
+    login: (user: UserSignIn) => Promise<void>;
+    register: (user: UserSignUp) => Promise<void>
 }

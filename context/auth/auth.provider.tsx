@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { ApiResponse } from '../../lib/client'
 import authServices from './auth-service'
-import { AuthContextApi, CurrentUserModel, UserSignIn } from './auth.types'
+import { AuthContextApi, CurrentUserModel, UserSignIn, UserSignUp } from './auth.types'
 
 const AuthContext = createContext<AuthContextApi>({} as AuthContextApi)
 
@@ -19,20 +19,19 @@ const AuthProvider: React.FC = ({ children }) => {
   }, [router.pathname])
 
   useEffect(() => {
-    if(!['login','register'].includes(router.pathname)){
       authServices
-      .getCurrentUser()
-      .then((res) => {
-        setCurrentUser(res.data)
-      })
-      .catch((res) => {
-        setError(res.message)
-      })
-      .finally(() => setLoadingInitial(false))
-    }
+        .getCurrentUser()
+        .then((res) => {
+          setCurrentUser(res.data)
+        })
+        .catch((res) => {
+          setError(res.message)
+        })
+        .finally(() => setLoadingInitial(false))
   }, [router.pathname])
 
-  const login = (user: UserSignIn): Promise<void> => authServices
+  const login = (user: UserSignIn): Promise<void> =>
+    authServices
       .login(user)
       .then((res) => {
         setCurrentUser(res.data)
@@ -40,8 +39,18 @@ const AuthProvider: React.FC = ({ children }) => {
       .catch((res) => {
         setError(res.message)
       })
-      
-  const memoState = useMemo(() => ({ currentUser, login, error }), [currentUser, error])
+
+  const register = (user: UserSignUp): Promise<void> =>
+    authServices
+      .register(user)
+      .then((res) => {
+        setCurrentUser(res.data)
+      })
+      .catch((res) => {
+        setError(res.message)
+      })
+
+  const memoState = useMemo(() => ({ currentUser, login, error, register }), [currentUser, error])
 
   if (['/login', '/register'].indexOf(router.pathname) > -1 && currentUser) {
     router.push('/')
@@ -53,4 +62,4 @@ const AuthProvider: React.FC = ({ children }) => {
 
 export default AuthProvider
 
-export const useAuth = (): AuthContextApi => useContext(AuthContext);
+export const useAuth = (): AuthContextApi => useContext(AuthContext)
