@@ -31,7 +31,7 @@ const Login: NextPage = () => {
   const router = useRouter()
   const onSubmit = (value: UserSignIn, formikHelpers: FormikHelpers<UserSignIn>): void => {
     login(value).then(()=> {
-      router.replace('/')
+      // router.replace('/')
       toast.success('Welcome to quizz online')
     })
     

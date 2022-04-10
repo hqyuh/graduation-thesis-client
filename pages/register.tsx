@@ -1,3 +1,4 @@
+/* eslint-disable react/function-component-definition */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useFormik } from 'formik'
 import { NextPage } from 'next'

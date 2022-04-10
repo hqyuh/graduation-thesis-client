@@ -19,9 +19,13 @@ export interface ApiResponse<T = any> {
 
 export const axiosClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_TEXT_API_URL,
-  headers: {
-    Authorization: typeof window !== 'undefined' && `Bearer ${loadFromLocalStorage(ACCESS_TOKEN_KEY)}`,
-  },
+})
+
+axiosClient.interceptors.request.use((config) => {
+  if (typeof window !== undefined && !['/login', '/register'].includes(window.location.pathname) && config.headers !== undefined && loadFromLocalStorage(ACCESS_TOKEN_KEY)) {
+    config.headers.Authorization = `Bearer ${loadFromLocalStorage(ACCESS_TOKEN_KEY)}`
+  }
+  return config
 })
 
 axiosClient.interceptors.response.use(
@@ -29,17 +33,17 @@ axiosClient.interceptors.response.use(
     if (response.data && response.data.type === ResponseMessage.ERROR) {
       return Promise.reject(response.data)
     }
-    const responseToken = response.headers.Authorization
-    if(responseToken){
-      saveToLocalStorage(ACCESS_TOKEN_KEY, response.headers.Authorization)
+    const responseToken = response.headers.authorization
+    if (responseToken) {
+      saveToLocalStorage(ACCESS_TOKEN_KEY, responseToken)
     }
     return response
   },
   (error) => {
     let { message } = error
     let status
-    // eslint-disable-next-line eqeqeq
-    if (status == '401') {
+  
+    if (status === '401') {
       window?.location?.replace('/login')
       removeFromLocalStorage(ACCESS_TOKEN_KEY)
     }
