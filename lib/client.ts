@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios'
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { ACCESS_TOKEN_KEY } from '../constants/index'
 import { loadFromLocalStorage, removeFromLocalStorage, saveToLocalStorage } from './localStorage'
 
@@ -21,9 +21,15 @@ export const axiosClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_TEXT_API_URL,
 })
 
-axiosClient.interceptors.request.use((config) => {
-  if (typeof window !== undefined && !['/login', '/register'].includes(window.location.pathname) && config.headers !== undefined && loadFromLocalStorage(ACCESS_TOKEN_KEY)) {
-    config.headers.Authorization = `Bearer ${loadFromLocalStorage(ACCESS_TOKEN_KEY)}`
+axiosClient.interceptors.request.use((config: AxiosRequestConfig) => {
+  const tokenOnStore = loadFromLocalStorage(ACCESS_TOKEN_KEY)
+  if (
+    typeof window !== undefined &&
+    !['/login', '/register'].includes(window.location.pathname) &&
+    config.headers !== undefined &&
+    tokenOnStore
+  ) {
+    config.headers.Authorization = `Bearer ${tokenOnStore}`
   }
   return config
 })
@@ -42,7 +48,7 @@ axiosClient.interceptors.response.use(
   (error) => {
     let { message } = error
     let status
-  
+
     if (status === '401') {
       window?.location?.replace('/login')
       removeFromLocalStorage(ACCESS_TOKEN_KEY)

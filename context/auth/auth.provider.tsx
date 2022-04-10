@@ -35,6 +35,7 @@ const AuthProvider: React.FC = ({ children }) => {
       .login(user)
       .then((res) => {
         setCurrentUser(res.data)
+        router.replace('/')
       })
       .catch((res) => {
         setError(res.message)
@@ -50,6 +51,7 @@ const AuthProvider: React.FC = ({ children }) => {
         setError(res.message)
       })
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoState = useMemo(() => ({ currentUser, login, error, register }), [currentUser, error])
 
   if (['/login', '/register'].indexOf(router.pathname) > -1 && currentUser) {

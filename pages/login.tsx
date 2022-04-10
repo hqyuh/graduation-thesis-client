@@ -2,10 +2,8 @@
 import { FormikHelpers, useFormik } from 'formik'
 import { NextPage } from 'next'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { Password } from 'primereact/password'
 import React from 'react'
-import { toast } from 'react-toastify'
 import * as yup from 'yup'
 import InputWrapper from '../components/InputText'
 import { YUP_MESSAGE } from '../constants'
@@ -28,13 +26,8 @@ const initialValues: UserSignIn = {
 const Login: NextPage = () => {
   const { t } = useTranslations()
   const { login } = useAuth()
-  const router = useRouter()
   const onSubmit = (value: UserSignIn, formikHelpers: FormikHelpers<UserSignIn>): void => {
-    login(value).then(()=> {
-      // router.replace('/')
-      toast.success('Welcome to quizz online')
-    })
-    
+    login(value)
   }
   const formik = useFormik<UserSignIn>({
     initialValues,
@@ -102,4 +95,5 @@ const Login: NextPage = () => {
     </div>
   )
 }
+
 export default Login

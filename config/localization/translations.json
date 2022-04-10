@@ -2,5 +2,14 @@
   "login": "Login",
   "register": "Register",
   "signin": "Sign in",
-  "signup": "Sign up"
+  "signup": "Sign up",
+  "exam_manage": "Quản lý bài thi",
+  "exam_name_manage": "Quản lý đề thi",
+  "subject_manage": "Quản lý môn học",
+  "lib_manage": "Quản lý thư viện",
+  "mark_manage": "Quản lý điểm",
+  "class_manage": "Quản lý lớp học",
+  "account_manage": "Quản lý tài khoản",
+  "user_manage": "Quản lý thông tin cá nhân",
+  "stats": "Thống kê báo cáo"
 }

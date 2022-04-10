@@ -3,10 +3,8 @@
 import { useFormik } from 'formik'
 import { NextPage } from 'next'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { Password } from 'primereact/password'
 import React from 'react'
-import { toast } from 'react-toastify'
 import * as yup from 'yup'
 import InputWrapper from '../components/InputText'
 import { YUP_MESSAGE } from '../constants'
@@ -33,12 +31,8 @@ const initialValues: UserSignUp = {
 const Register: NextPage = () => {
   const { t } = useTranslations()
   const { register } = useAuth()
-  const router = useRouter()
   const onSubmit = (values: UserSignUp): void => {
-    register(values).then(()=> {
-      router.replace('/login')
-      toast.success('Register successfully!')
-    })
+    register(values)
   }
 
   const formik = useFormik<UserSignUp>({

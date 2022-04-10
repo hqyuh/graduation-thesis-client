@@ -1,0 +1,20 @@
+@import '../variables';
+
+.sidebar {
+    width: 300px;
+    background: $violet;
+    height: 100vh;
+    overflow-y: scroll;
+    &-item {
+        transition: .5s;
+        &:hover {
+            transform: scale(1.1);
+        }
+        &-label {
+            color: #ffff;
+            &.active {
+                color : #F900BF;
+            }
+        }    
+    }
+}
