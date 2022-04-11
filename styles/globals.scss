@@ -9,6 +9,7 @@
 @import 'react-toastify/dist/ReactToastify.css';
 @import './components/input';
 @import './components/sidebar';
+@import './components/error';
 
 html,
 body {
@@ -32,3 +33,6 @@ a {
 }
 
 
+.z-up {
+  z-index: 9999!important;
+}

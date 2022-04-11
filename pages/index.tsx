@@ -1,5 +1,6 @@
 import React from 'react'
 import { useAuth } from '../context/auth/auth.provider'
+import withAuth from '../hocs/withAuth'
 import getLayout from '../shared/getLayout'
 import { NextPageWithLayout } from './_app'
 
@@ -8,6 +9,8 @@ const HomePage: NextPageWithLayout = () => {
   return <div>{currentUser?.username} Home page</div>
 }
 
-HomePage.getLayout = getLayout
+const WithAuthHomePage = withAuth(HomePage)
 
-export default HomePage
+WithAuthHomePage.getLayout = getLayout
+
+export default  WithAuthHomePage

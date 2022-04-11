@@ -48,38 +48,38 @@ const Register: NextPage = () => {
         <div className="title font-size-50 mt-5 mb-2 font-weight-900">{t('register')}</div>
         <div className="mt-3 mb-3">
           <InputWrapper
-            placeholder="First Name"
             className="p-inputtext text"
             onChange={handleChange}
             name="firstName"
             formik={formik}
+            label="First Name"
           />
         </div>
         <div className="mt-3 mb-3">
           <InputWrapper
-            placeholder="Last Name"
             className="p-inputtext text"
             onChange={handleChange}
             name="lastName"
             formik={formik}
+            label="Last Name"
           />
         </div>
         <div className="mt-3 mb-3">
           <InputWrapper
-            placeholder="Email"
             className="p-inputtext text"
             onChange={handleChange}
             name="email"
             formik={formik}
+            label="Email"
           />
         </div>
         <div className="mt-3 mb-3">
           <InputWrapper
-            placeholder="Username"
             className="p-inputtext text"
             onChange={handleChange}
             name="username"
             formik={formik}
+            label="Username"
           />
         </div>
         <div className="mt-3 mb-3">
@@ -92,10 +92,10 @@ const Register: NextPage = () => {
             onChange={handleChange}
             name="password"
           />
-          <p className="text-start font-size-12 text-danger mb-0 mt-1">{errors?.password}</p>
+          <p className="text-start font-size-12 text-danger mb-0 mt-1">{formik.touched?.password && errors?.password}</p>
         </div>
         <div className="form-group">
-          <button className="w-100 btn btn-primary mt-4 mb-2 text-white font-weight-900" type="submit">
+          <button className="w-100 btn btn-primary mt-4 mb-2 text-white font-weight-900 button" type="submit">
             {t('signup')}
           </button>
         </div>

@@ -3,5 +3,6 @@
 $theme-colors: map-merge($theme-colors, (
         "primary": #8F60DE,
         "secondary":#E0E0E0,
-        'danger':  #ff4136
+        'danger':  #ff4136,
+        'dark': #333333,
 ));

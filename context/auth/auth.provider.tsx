@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router'
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { toast } from 'react-toastify'
+import { NO_AUTHORIZE_PATHNAME } from '../../constants'
 import { ApiResponse } from '../../lib/client'
 import authServices from './auth-service'
 import { AuthContextApi, CurrentUserModel, UserSignIn, UserSignUp } from './auth.types'
@@ -9,7 +11,7 @@ const AuthContext = createContext<AuthContextApi>({} as AuthContextApi)
 const AuthProvider: React.FC = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<CurrentUserModel | null>(null)
   const [error, setError] = useState<ApiResponse | null>()
-  const [loadingInitial, setLoadingInitial] = useState<boolean>(true)
+  const [loadingInitial, setLoadingInitial] = useState<boolean>(false)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter()
   useEffect(() => {
@@ -22,12 +24,12 @@ const AuthProvider: React.FC = ({ children }) => {
       authServices
         .getCurrentUser()
         .then((res) => {
-          setCurrentUser(res.data)
+          setCurrentUser(res.data || null)
         })
         .catch((res) => {
           setError(res.message)
         })
-        .finally(() => setLoadingInitial(false))
+        .finally(() => setLoadingInitial(true))
   }, [router.pathname])
 
   const login = (user: UserSignIn): Promise<void> =>
@@ -35,9 +37,11 @@ const AuthProvider: React.FC = ({ children }) => {
       .login(user)
       .then((res) => {
         setCurrentUser(res.data)
+        toast.success('Welcome to quizz online')
         router.replace('/')
       })
       .catch((res) => {
+        toast.error(res.message)
         setError(res.message)
       })
 
@@ -45,21 +49,23 @@ const AuthProvider: React.FC = ({ children }) => {
     authServices
       .register(user)
       .then((res) => {
+        toast.success(res.message)
         setCurrentUser(res.data)
       })
       .catch((res) => {
+        toast.error(res.message)
         setError(res.message)
       })
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoState = useMemo(() => ({ currentUser, login, error, register }), [currentUser, error])
 
-  if (['/login', '/register'].indexOf(router.pathname) > -1 && currentUser) {
+  if (NO_AUTHORIZE_PATHNAME.indexOf(router.pathname) > - 1 && currentUser) {
     router.push('/')
     return null
   }
 
-  return <AuthContext.Provider value={memoState}>{!loadingInitial && children}</AuthContext.Provider>
+  return <AuthContext.Provider value={memoState}>{loadingInitial && children}</AuthContext.Provider>
 }
 
 export default AuthProvider

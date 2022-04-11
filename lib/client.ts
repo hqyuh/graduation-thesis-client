@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
-import { ACCESS_TOKEN_KEY } from '../constants/index'
+import { ACCESS_TOKEN_KEY, NO_AUTHORIZE_PATHNAME } from '../constants/index'
 import { loadFromLocalStorage, removeFromLocalStorage, saveToLocalStorage } from './localStorage'
 
 export const ResponseMessage = {
@@ -25,7 +25,7 @@ axiosClient.interceptors.request.use((config: AxiosRequestConfig) => {
   const tokenOnStore = loadFromLocalStorage(ACCESS_TOKEN_KEY)
   if (
     typeof window !== undefined &&
-    !['/login', '/register'].includes(window.location.pathname) &&
+    !NO_AUTHORIZE_PATHNAME.includes(window.location.pathname) &&
     config.headers !== undefined &&
     tokenOnStore
   ) {

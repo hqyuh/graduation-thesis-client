@@ -8,3 +8,5 @@ export const YUP_MESSAGE = {
 } as const
 
 export const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN'
+
+export const NO_AUTHORIZE_PATHNAME = ['/login','/register']

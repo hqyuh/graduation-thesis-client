@@ -34,7 +34,7 @@ const Login: NextPage = () => {
     onSubmit,
     validationSchema: schema,
   })
-  const { handleChange, handleSubmit, errors } = formik
+  const { handleChange, handleSubmit, errors, touched } = formik
 
   return (
     <div className="container mx-auto py-5">
@@ -42,11 +42,11 @@ const Login: NextPage = () => {
         <div className="title font-size-50 mt-5 mb-2 font-weight-900">{t('login')}</div>
         <div className="mt-3 mb-3">
           <InputWrapper
-            placeholder="Email"
             className="p-inputtext text"
             onChange={handleChange}
             name="email"
             formik={formik}
+            label="Email"
           />
         </div>
         <div className="mt-3 mb-3">
@@ -59,11 +59,11 @@ const Login: NextPage = () => {
             onChange={handleChange}
             name="password"
           />
-          <p className="text-start font-size-12 text-danger mb-0 mt-1">{errors?.password}</p>
+          <p className="text-start font-size-12 text-danger mb-0 mt-1">{touched?.password && errors?.password}</p>
         </div>
         <div className="form-group">
           <button
-            className="w-100 btn btn-primary mt-4 mb-2 text-white font-weight-900"
+            className="w-100 btn btn-primary mt-4 mb-2 text-white font-weight-900 button"
             type="submit"
             onClick={handleSubmit}
           >
