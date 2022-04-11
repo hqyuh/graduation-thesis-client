@@ -21,7 +21,7 @@ const withAuth = <P extends withAuthProps = withAuthProps>(WrappedComponent: Nex
     }
     return <WrappedComponent {...props} isAuthenticated={Boolean(!unAuthenticated)} />
   }
-  WithAuth.displayName = `WithToast${getDisplayName<P>(WithAuth)}`
+  WithAuth.displayName = `WithAuth${getDisplayName<P>(WithAuth)}`
   return WithAuth
 }
 
