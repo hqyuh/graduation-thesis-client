@@ -15,10 +15,10 @@ const withAuth = <P extends withAuthProps = withAuthProps>(WrappedComponent: Nex
     const { currentUser } = useAuth()
     const router = useRouter()
     const unAuthenticated = !currentUser || !loadFromLocalStorage(ACCESS_TOKEN_KEY)
-    if (!NO_AUTHORIZE_PATHNAME.includes(router.pathname) && unAuthenticated) {
-      router.replace('/login')
-      return null
-    }
+    // if (!NO_AUTHORIZE_PATHNAME.includes(router.pathname) && unAuthenticated) {
+    //   router.replace('/login')
+    //   return null
+    // }
     return <WrappedComponent {...props} isAuthenticated={Boolean(!unAuthenticated)} />
   }
   WithAuth.displayName = `WithAuth${getDisplayName<P>(WithAuth)}`
