@@ -92,7 +92,9 @@ const Register: NextPage = () => {
             onChange={handleChange}
             name="password"
           />
-          <p className="text-start font-size-12 text-danger mb-0 mt-1">{formik.touched?.password && errors?.password}</p>
+          <p className="text-start font-size-12 text-danger mb-0 mt-1">
+            {formik.touched?.password && errors?.password}
+          </p>
         </div>
         <div className="form-group">
           <button className="w-100 btn btn-primary mt-4 mb-2 text-white font-weight-900 button" type="submit">

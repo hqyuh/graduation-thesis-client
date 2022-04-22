@@ -9,4 +9,10 @@ export const YUP_MESSAGE = {
 
 export const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN'
 
-export const NO_AUTHORIZE_PATHNAME = ['/login','/register']
+export const NO_AUTHORIZE_PATHNAME = ['/login', '/register']
+
+
+export enum RESPONSE_TYPE_ENUM  {
+  'SUCCESS' = 'SUCCESS',
+  'ERROR' = 'ERROR'
+}

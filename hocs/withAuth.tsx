@@ -6,11 +6,11 @@ import { loadFromLocalStorage } from '../lib/localStorage'
 import { NextPageWithLayout } from '../pages/_app'
 import { getDisplayName } from './withToast'
 
-interface withAuthProps {
-  isAuthenticated: boolean
-}
 
-const withAuth = <P extends withAuthProps = withAuthProps>(WrappedComponent: NextPageWithLayout<P>): NextPageWithLayout<P> => {
+
+const withAuth = <P extends object>(
+  WrappedComponent: NextPageWithLayout<P>,
+): NextPageWithLayout<P> => {
   const WithAuth: NextPageWithLayout<P> = (props) => {
     const { currentUser } = useAuth()
     const router = useRouter()
