@@ -22,15 +22,16 @@ export const axiosClient = axios.create({
 })
 
 axiosClient.interceptors.request.use((config: AxiosRequestConfig) => {
-  const tokenOnStore = loadFromLocalStorage(ACCESS_TOKEN_KEY)
+  const tokenOnStore = typeof window !== 'undefined' ? loadFromLocalStorage(ACCESS_TOKEN_KEY) : ''
   if (
-    typeof window !== undefined &&
-    !NO_AUTHORIZE_PATHNAME.includes(window.location.pathname) &&
+     typeof window !== 'undefined' &&
+    !NO_AUTHORIZE_PATHNAME.includes(window?.location.pathname) &&
     config.headers !== undefined &&
     tokenOnStore
   ) {
-    config.headers.Authorization = `Bearer ${tokenOnStore}`
+    config.headers.Authorization = `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJVc2VyIE1hbmFnZW1lbnQgUG9ydGFsLiIsInN1YiI6InF1YW5naHV5IiwiaXNzIjoiQU1CSVRJT1VTIE1FTiIsIkF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiZXhwIjoxNjUxMTE2MTAwLCJpYXQiOjE2NTA2ODQxMDB9.BZvFGgmK-9q5x8cbb5yZLUiu_nsIXx3ehlfB2gaU-h4H-9GhtXU737RAKgVa4SplNJ0gEp66QDORfKjjgH1_5Q`
   }
+  config.headers.Authorization = `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJVc2VyIE1hbmFnZW1lbnQgUG9ydGFsLiIsInN1YiI6InF1YW5naHV5IiwiaXNzIjoiQU1CSVRJT1VTIE1FTiIsIkF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiZXhwIjoxNjUxMTE2MTAwLCJpYXQiOjE2NTA2ODQxMDB9.BZvFGgmK-9q5x8cbb5yZLUiu_nsIXx3ehlfB2gaU-h4H-9GhtXU737RAKgVa4SplNJ0gEp66QDORfKjjgH1_5Q`
   return config
 })
 
@@ -40,7 +41,7 @@ axiosClient.interceptors.response.use(
       return Promise.reject(response.data)
     }
     const responseToken = response.headers.authorization
-    if (responseToken) {
+    if (responseToken && typeof window !== 'undefined') {
       saveToLocalStorage(ACCESS_TOKEN_KEY, responseToken)
     }
     return response
@@ -49,7 +50,7 @@ axiosClient.interceptors.response.use(
     let { message } = error
     let status
 
-    if (status === '401') {
+    if (status === '401' && window !== undefined) {
       window?.location?.replace('/login')
       removeFromLocalStorage(ACCESS_TOKEN_KEY)
     }

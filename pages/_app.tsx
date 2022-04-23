@@ -4,7 +4,7 @@ import type { AppProps } from 'next/app'
 import { NextPage } from 'next'
 import Provider from './Provider'
 
-export type NextPageWithLayout<P = any, IP = P> = NextPage <P, IP> & {
+export type NextPageWithLayout<P = any, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
 }
 

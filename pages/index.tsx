@@ -13,4 +13,4 @@ const WithAuthHomePage = withAuth(HomePage)
 
 WithAuthHomePage.getLayout = getLayout
 
-export default  WithAuthHomePage
+export default WithAuthHomePage

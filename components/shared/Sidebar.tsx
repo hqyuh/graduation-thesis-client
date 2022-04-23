@@ -33,12 +33,12 @@ const Sidebar: React.FC = () => {
       {
         icon: <PaperIcon />,
         label: t('exam_name_manage'),
-        router: '/exam-name',
+        router: '/exam-management',
       },
       {
         icon: <BookIcon />,
         label: t('subject_manage'),
-        router: '/subject',
+        router: '/exam-management',
       },
       {
         icon: <LibIcon />,
