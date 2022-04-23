@@ -5,6 +5,7 @@
 @import './login.style.scss';
 @import './homepage.style';
 @import './homepagesearch.style';
+@import './homepagecontent.style';
 @import "primereact/resources/primereact.min.css";                  //core css
 @import "primeicons/primeicons.css"; 
 @import "primereact/resources/themes/saga-blue/theme.css"; 
@@ -12,7 +13,7 @@
 @import './components/input';
 @import './components/sidebar';
 @import './components/error';
-
+  
 html,
 body {
   width: 100%;

@@ -1,11 +1,8 @@
-import { NextPage } from 'next'
 import React, { useState } from 'react'
 import SearchIcon from '../icons/SearchIcon'
-import { Password } from 'primereact/password'
-import InputWrapper from '../components/InputText'
 import { InputText } from 'primereact/inputtext'
 
-const HomePage: NextPage = () => {
+const HomePageSearch: React.FC = () => {
   const [value, setValue] = useState('')
   return (
     <div className="search-group mx-5">
@@ -16,4 +13,4 @@ const HomePage: NextPage = () => {
     </div>
   )
 }
-export default HomePage
+export default HomePageSearch
