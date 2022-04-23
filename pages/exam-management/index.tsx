@@ -38,18 +38,20 @@ const WithAuthExamManagementPage = withAuth<Props>(ExamManagementPage)
 
 WithAuthExamManagementPage.getLayout = getLayout
 
-export default WithAuthExamManagementPage
-
 export const getServerSideProps: GetServerSideProps = async () => {
-  const response = await ExamService.getAllTopic()
-  if(response.type === RESPONSE_TYPE_ENUM.ERROR){
-      return {
-          notFound: true,
-      }
+    const response = await ExamService.getAllTopic()
+    if(response.type === RESPONSE_TYPE_ENUM.ERROR){
+        return {
+            notFound: true,
+        }
+    }
+   return {
+      props: {
+        subjects: response.data,
+      },
+    }
   }
-  return {
-    props: {
-      subjects: response.data,
-    },
-  }
-}
+
+export default ExamManagementPage
+
+
