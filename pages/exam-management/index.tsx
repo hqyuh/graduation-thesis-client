@@ -11,15 +11,16 @@ import getLayout from '../../shared/getLayout'
 import { NextPageWithLayout } from '../_app'
 
 interface Props {
-    subject: ExamModel[]
+    subjects: ExamModel[]
 }
 
-const ExamManagementPage: NextPageWithLayout<Props> = ({subject}) => {
+const ExamManagementPage: NextPageWithLayout<Props> = ({subjects}) => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
+  console.log(subjects)
   return (
     <div className="px-3 py-4">
       {
-          subject?.map((sub) => <Subject key={sub.id} subject={sub} />)
+          subjects?.map((sub) => <Subject key={sub.id} subject={sub} />)
       }
       <ConfirmExamModal isOpen={isOpenModal}>
         {/* <Subject className="subject-bigger pb-2">
@@ -52,6 +53,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
     }
   }
 
-export default ExamManagementPage
+export default WithAuthExamManagementPage
 
 

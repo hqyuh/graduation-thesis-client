@@ -1,4 +1,4 @@
 export interface ExamModel {
   id: number
-  name: string
+  topicName: string
 }
