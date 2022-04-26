@@ -79,7 +79,7 @@ const Sidebar: React.FC = () => {
       <div className="py-5 d-flex align-items-center justify-content-center">
         <Logo />
       </div>
-      <div className="px-4" role="button">
+      <div className="px-4 h-100" role="button">
         {menu.map((item: MenuModel, index: number) => (
           // eslint-disable-next-line react/no-array-index-key
           <div className="row py-4 sidebar-item" key={index} onClick={() => router.push(item.router)} tabIndex={index} role="button">

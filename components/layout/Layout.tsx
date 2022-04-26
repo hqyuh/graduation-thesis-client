@@ -7,7 +7,7 @@ const Layout: React.FC = ({ children }) => (
       <Sidebar />
       <main className="w-100">
       <Header />
-        <div className="p-4">{children}</div>
+        <div className="p-3">{children}</div>
       </main>
     </div>
   )
