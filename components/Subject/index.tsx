@@ -13,9 +13,9 @@ const Subject: React.FC<SubjectProps> = ({children, className = '', subject}) =>
     return (
         <div className={`subject ${className}`}>
             <BackGroundSubjectIcon/>
-            <span className="btn btn-grey subject-question-number">12 Q</span>
+            <span className="btn btn-grey subject-question-number">{subject?.question.length}&nbsp;Q</span>
             <span className="btn btn-grey subject-draft">Bản thảo</span>
-            <p className="px-2 py-3">{subject?.topicName}</p>
+            <p className="px-2 py-3">{subject?.testName}</p>
             {children}
         </div>
     )

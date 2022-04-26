@@ -26,18 +26,8 @@ const Sidebar: React.FC = () => {
   const menu: MenuModel[] = useMemo(
     () => [
       {
-        icon: <WritingPaperIcon />,
-        label: t('exam_manage'),
-        router: '/exam',
-      },
-      {
         icon: <PaperIcon />,
         label: t('exam_name_manage'),
-        router: '/exam-management',
-      },
-      {
-        icon: <BookIcon />,
-        label: t('subject_manage'),
         router: '/exam-management',
       },
       {

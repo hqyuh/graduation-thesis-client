@@ -24,7 +24,7 @@ export const axiosClient = axios.create({
 axiosClient.interceptors.request.use((config: AxiosRequestConfig) => {
   const tokenOnStore = typeof window !== 'undefined' ? loadFromLocalStorage(ACCESS_TOKEN_KEY) : ''
   if (
-     typeof window !== 'undefined' &&
+    typeof window !== 'undefined' &&
     !NO_AUTHORIZE_PATHNAME.includes(window?.location.pathname) &&
     config.headers !== undefined &&
     tokenOnStore

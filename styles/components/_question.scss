@@ -1,0 +1,59 @@
+.create-question {
+  background-color: #8f60de;
+  .dropdown {
+    position: absolute;
+    left: 5px;
+    .custom {
+      border-radius: 20px;
+      background: #6832c3;
+      font-size: 700;
+      width: 179px;
+      .p-dropdown-label {
+        color: #ffff;
+        text-align: center;
+        font-weight: 700;
+      }
+    }
+  }
+}
+
+.bg {
+  background-color: #8f60de;
+  border-radius: 10px;
+  .question-insert {
+    height: 198px;
+  }
+}
+
+.row.my-2 {
+    gap: 12px;
+}
+
+.answer-box {
+  background: #57b6eb;
+  box-shadow: 0px 5px 0px #156c9d;
+  border-radius: 15px;
+  width: 240px;
+  .answer-insert {
+      &::placeholder {
+          color: white;
+      }
+  }
+}
+
+$answers: #57b6eb, #57ebbf, #d657eb, #eb5772;
+$answers-insert: #156c9d, #23a17c, #9a29ad, #c63650;
+
+@each $answer in $answers {
+  $i: index($answers, $answer);
+  .answer-box-#{$i} {
+    background: $answer;
+  }
+}
+
+@each $answer in $answers-insert {
+  $i: index($answers-insert, $answer);
+  .answer-insert-#{$i} {
+    background: $answer;
+  }
+}

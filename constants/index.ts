@@ -11,8 +11,12 @@ export const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN'
 
 export const NO_AUTHORIZE_PATHNAME = ['/login', '/register']
 
-
-export enum RESPONSE_TYPE_ENUM  {
+export enum RESPONSE_TYPE_ENUM {
   'SUCCESS' = 'SUCCESS',
-  'ERROR' = 'ERROR'
+  'ERROR' = 'ERROR',
+}
+
+export enum HEADER_TITLE_ENUM {
+  '/exam-management' = 'Quản lý đề thi',
+  '/exam-management/' = 'Quản lý bài thi'
 }

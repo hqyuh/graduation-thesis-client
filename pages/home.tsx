@@ -1,21 +1,21 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { NextPage } from 'next'
+import Link from 'next/link'
 import React from 'react'
-import LogoHomePage from '../icons/LogoHomePage'
-import HomeIcon from '../icons/HomeIcon'
 import ActivityIcon from '../icons/ActivityIcon'
 import ClassesIcon from '../icons/ClassesIcon'
-import HomePageSearch from './homepagesearch'
+import HomeIcon from '../icons/HomeIcon'
+import LogoHomePage from '../icons/LogoHomePage'
 import SettingIcon from '../icons/SettingIcon'
-import Link from 'next/link'
+import Search from '../components/Search'
 
-const HomePage: NextPage = () => {
-  return (
+const HomePage: NextPage = () => (
     <div className="home-page d-flex align-items-center text-muted shadow w-100">
       <header className="navbar navbar-expand bg-white d-flex align-items-center justify-content-between w-100">
         <div className="d-flex h-100">
           <LogoHomePage />
-          <HomePageSearch />
-          <Link href={''}>
+          <Search />
+          <Link href="">
             <a
               role="button"
               className="home-item nav-item mx-3 d-flex justify-content-center align-items-center fw-bold">
@@ -23,7 +23,7 @@ const HomePage: NextPage = () => {
               <span className="mx-1">Home</span>
             </a>
           </Link>
-          <Link href={''}>
+          <Link href="">
             <a
               role="button"
               className="activity-item nav-item mx-3 d-flex justify-content-center align-items-center fw-bold">
@@ -31,9 +31,9 @@ const HomePage: NextPage = () => {
               <span className="mx-1">Activity</span>
             </a>
           </Link>
-          <Link href={''}>
+          <Link href="">
             <a
-              role="button "
+              role="button"
               className="classes-item nav-item mx-3 d-flex justify-content-center align-items-center fw-bold">
               <ClassesIcon />
               <span className="mx-1">Classes</span>
@@ -41,12 +41,11 @@ const HomePage: NextPage = () => {
           </Link>
         </div>
         <div className="d-flex align-items-center">
-          <button className="btn-login btn btn-secondary rounded-10 fw-bold mx-2">Login</button>
-          <button className="btn-register btn btn-secondary rounded-10 fw-bold mx-2" >Register</button>
+          <button className="btn-login btn btn-secondary rounded-10 fw-bold mx-2" type="button">Login</button>
+          <button className="btn-register btn btn-secondary rounded-10 fw-bold mx-2" type="button">Register</button>
           <SettingIcon />
         </div>
       </header>
     </div>
   )
-}
 export default HomePage

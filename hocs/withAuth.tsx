@@ -6,19 +6,15 @@ import { loadFromLocalStorage } from '../lib/localStorage'
 import { NextPageWithLayout } from '../pages/_app'
 import { getDisplayName } from './withToast'
 
-
-
-const withAuth = <P extends object>(
-  WrappedComponent: NextPageWithLayout<P>,
-): NextPageWithLayout<P> => {
+const withAuth = <P extends object>(WrappedComponent: NextPageWithLayout<P>): NextPageWithLayout<P> => {
   const WithAuth: NextPageWithLayout<P> = (props) => {
     const { currentUser } = useAuth()
     const router = useRouter()
     const unAuthenticated = typeof window !== 'undefined' && (!currentUser || !loadFromLocalStorage(ACCESS_TOKEN_KEY))
-    if (!NO_AUTHORIZE_PATHNAME.includes(router.pathname) && unAuthenticated) {
-      router.replace('/login')
-      return null
-    }
+    // if (!NO_AUTHORIZE_PATHNAME.includes(router.pathname) && unAuthenticated) {
+    //   router.replace('/login')
+    //   return null
+    // }
     return <WrappedComponent {...props} />
   }
   WithAuth.displayName = `WithAuth${getDisplayName<P>(WithAuth)}`

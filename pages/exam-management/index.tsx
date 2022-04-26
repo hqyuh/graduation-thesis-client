@@ -1,6 +1,7 @@
 /* eslint-disable react/self-closing-comp */
 import { GetServerSideProps } from 'next'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 import ConfirmExamModal from '../../components/ConfirmExamModal'
 import Subject from '../../components/Subject'
 import { RESPONSE_TYPE_ENUM } from '../../constants'
@@ -10,13 +11,16 @@ import ExamService from '../../services/exam-service'
 import getLayout from '../../shared/getLayout'
 import { NextPageWithLayout } from '../_app'
 
-interface Props {
-    subjects: ExamModel[]
-}
-
-const ExamManagementPage: NextPageWithLayout<Props> = ({subjects}) => {
+const ExamManagementPage: NextPageWithLayout = () => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
-  console.log(subjects)
+  const [subjects,setSubjects] = useState<ExamModel[]>([])
+  useEffect(()=> {
+     ExamService.getAllTopic().then((res)=> {
+       setSubjects(res.data)
+     }).catch((res) => {
+       toast.error(res.message)
+     })
+  }, [])
   return (
     <div className="px-3 py-4">
       {
@@ -35,23 +39,23 @@ const ExamManagementPage: NextPageWithLayout<Props> = ({subjects}) => {
   )
 }
 
-const WithAuthExamManagementPage = withAuth<Props>(ExamManagementPage)
+const WithAuthExamManagementPage = withAuth(ExamManagementPage)
 
 WithAuthExamManagementPage.getLayout = getLayout
 
-export const getServerSideProps: GetServerSideProps = async () => {
-    const response = await ExamService.getAllTopic()
-    if(response.type === RESPONSE_TYPE_ENUM.ERROR){
-        return {
-            notFound: true,
-        }
-    }
-   return {
-      props: {
-        subjects: response.data,
-      },
-    }
-  }
+// export const getServerSideProps: GetServerSideProps = async () => {
+    
+//     if(response.type === RESPONSE_TYPE_ENUM.ERROR){
+//         return {
+//             notFound: true,
+//         }
+//     }
+//    return {
+//       props: {
+//         subjects: response.data,
+//       },
+//     }
+//   }
 
 export default WithAuthExamManagementPage
 
