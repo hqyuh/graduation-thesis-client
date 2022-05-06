@@ -13,7 +13,7 @@ export const customStyles: Styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    background: '#E5E5E5!important',
+    background: 'rgba(196, 196, 196, 0.4)!important',
     border: 'none!important',
   },
   
