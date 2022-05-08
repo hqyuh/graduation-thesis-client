@@ -18,5 +18,18 @@ export enum RESPONSE_TYPE_ENUM {
 
 export enum HEADER_TITLE_ENUM {
   '/exam-management' = 'Quản lý đề thi',
-  '/exam-management/' = 'Quản lý bài thi'
+  '/exam-management/' = 'Quản lý bài thi',
 }
+
+export enum QUESTION_TYPE {
+  'Checkbox' = 'Checkbox',
+  'Radio' = 'Radio',
+  'Essay' = 'Essay',
+}
+
+export const ANSWER_TITLE_ENUM = {
+  '0': 'A',
+  '1': 'B',
+  '2': 'C',
+  '3': 'D',
+} as const

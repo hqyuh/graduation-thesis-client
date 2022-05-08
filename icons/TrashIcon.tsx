@@ -2,7 +2,8 @@ import React from 'react'
 
 export default function TrashIcon(props: any) {
   return (
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" 
+    {...props}>
       <rect opacity="0.4" width="28" height="28" rx="10" fill="#117DB9" />
       <g clipPath="url(#clip0_414_1258)">
         <path
