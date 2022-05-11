@@ -47,7 +47,7 @@ const Subject: React.FC<SubjectProps & ExamFormEvent> = ({
       }}
     />}
       <BackGroundSubjectIcon />
-      <span className="btn btn-grey subject-question-number">{subject?.question.length}&nbsp;Q</span>
+      <span className="btn btn-grey subject-question-number">{subject?.questions.length}&nbsp;Q</span>
       <span className="btn btn-grey subject-draft">Bản thảo</span>
       <p className="px-2 pt-3 w-100 text-center">{subject?.testName}</p>
       <p className="hour py-1">60 minutes</p>

@@ -106,7 +106,7 @@ const UpdateSubjectForm: React.FC<Props & ExamFormEvent> = ({
           />
         </div>
         <div className="col-12 mt-3 d-flex justify-content-center">
-          <Button label="Save" className="p-button-help button w-50 font-weight-700" />
+          <Button label="Save" className="p-button-help button w-50 font-weight-700" onClick={formik.handleSubmit}/>
         </div>
       </div>
     </div>
