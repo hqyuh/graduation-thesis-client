@@ -1,5 +1,6 @@
 /* eslint-disable react/self-closing-comp */
 import moment, { Moment } from 'moment'
+import { useRouter } from 'next/router'
 import { Button } from 'primereact/button'
 import { confirmDialog } from 'primereact/confirmdialog'
 import React, { useEffect, useState } from 'react'
@@ -14,32 +15,32 @@ import ExamService from '../../services/exam-service'
 import getLayout from '../../shared/getLayout'
 import { NextPageWithLayout } from '../_app'
 
-// const data = [
-//   {
-//     id: 'e',
-//     testName: 'abc',
-//     dateCreated: new Date(),
-//     examTime: new Date(),
-//     isStart: new Date(),
-//     isEnd: new Date(),
-//     activationCode: '',
-//     question: [],
-//     topicId: 0,
-//     currentTestName: 'abc',
-//   },
-//   {
-//     id: 'abc',
-//     testName: 'abc',
-//     dateCreated: new Date(),
-//     examTime: new Date(),
-//     isStart: new Date(),
-//     isEnd: new Date(),
-//     activationCode: '',
-//     question: [],
-//     topicId: 0,
-//     currentTestName: 'abc',
-//   },
-// ]
+const data = [
+  {
+    id: 'e',
+    testName: 'abc',
+    dateCreated: new Date(),
+    examTime: new Date(),
+    isStart: new Date(),
+    isEnd: new Date(),
+    activationCode: '',
+    question: [],
+    topicId: 0,
+    currentTestName: 'abc',
+  },
+  {
+    id: 'abc',
+    testName: 'abc',
+    dateCreated: new Date(),
+    examTime: new Date(),
+    isStart: new Date(),
+    isEnd: new Date(),
+    activationCode: '',
+    question: [],
+    topicId: 0,
+    currentTestName: 'abc',
+  },
+]
 
 export const convertSubmitTime = (time: Moment): string => moment(time).format('DD/MM/YYYY')
 
@@ -50,6 +51,7 @@ const ExamManagementPage: NextPageWithLayout = () => {
   const [selectedSubject, setSelectedSubject] = useState<ExamModel>({} as ExamModel)
   const [subjects, setSubjects] = useState<ExamModel[]>([])
   const [updateSubject, setUpdateSubject] = useState({})
+  const router = useRouter()
   useEffect(() => {
     ExamService.getAllTopic()
       .then((res) => {
@@ -109,7 +111,7 @@ const ExamManagementPage: NextPageWithLayout = () => {
     <div className="pb-3 pt-1 py-4">
       <Button label="Tạo đề thi" className="p-button-success my-2" onClick={toggleCreate} />
       <div className="d-flex flex-wrap">
-      {subjects?.map((sub) => (
+      {data?.map((sub) => (
         <Subject
           key={sub.id}
           subject={sub}
@@ -152,7 +154,9 @@ const ExamManagementPage: NextPageWithLayout = () => {
             <button type="button" className="btn btn-primary text-white w-50">
               Thực hành
             </button>
-            <button type="button" className="btn btn-primary text-white w-50 mt-2">
+            <button type="button" className="btn btn-primary text-white w-50 mt-2" onClick={()=> {
+              router.push(`/exam-management/${selectedSubject.id || 'not-found'}`)
+            }}>
               Tạo câu hỏi
             </button>
           </div>

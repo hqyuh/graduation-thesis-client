@@ -106,7 +106,7 @@ const CreateQuestionContainer: React.FC<Props> = ({ initialValues, onSubmit }) =
               </div>
             </div>
           )}
-          {questionType === QUESTION_TYPE.Essay && <InputAnswerArea nane="content" onChange={handleChange as any} />}
+          {questionType === QUESTION_TYPE.Essay && <InputAnswerArea nane="correctEssay" onChange={handleChange as any} />}
         </div>
       </div>
       <div className="d-flex align-items-center justify-content-end mt-2">

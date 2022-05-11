@@ -1,12 +1,13 @@
+import { Moment } from "moment"
 import { AnswersResponseTuple } from "../components/CheckBoxAnswer"
 
 export interface ExamModel {
   id: string
   testName: string
   dateCreated: Date
-  examTime: Date
-  isStart: Date
-  isEnd: Date
+  examTime: Date | Moment
+  isStart: Date | Moment
+  isEnd: Date | Moment
   activationCode: string
   question: QuestionModel
 }
