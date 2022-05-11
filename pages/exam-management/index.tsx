@@ -1,4 +1,5 @@
 /* eslint-disable react/self-closing-comp */
+import moment, { Moment } from 'moment'
 import { Button } from 'primereact/button'
 import { confirmDialog } from 'primereact/confirmdialog'
 import React, { useEffect, useState } from 'react'
@@ -13,6 +14,34 @@ import ExamService from '../../services/exam-service'
 import getLayout from '../../shared/getLayout'
 import { NextPageWithLayout } from '../_app'
 
+// const data = [
+//   {
+//     id: 'e',
+//     testName: 'abc',
+//     dateCreated: new Date(),
+//     examTime: new Date(),
+//     isStart: new Date(),
+//     isEnd: new Date(),
+//     activationCode: '',
+//     question: [],
+//     topicId: 0,
+//     currentTestName: 'abc',
+//   },
+//   {
+//     id: 'abc',
+//     testName: 'abc',
+//     dateCreated: new Date(),
+//     examTime: new Date(),
+//     isStart: new Date(),
+//     isEnd: new Date(),
+//     activationCode: '',
+//     question: [],
+//     topicId: 0,
+//     currentTestName: 'abc',
+//   },
+// ]
+
+export const convertSubmitTime = (time: Moment): string => moment(time).format('DD/MM/YYYY')
 
 const ExamManagementPage: NextPageWithLayout = () => {
   const { toggle: toggleUpdate, value: isUpdateOpen } = useToggle(false)
@@ -36,10 +65,12 @@ const ExamManagementPage: NextPageWithLayout = () => {
       message: 'Bạn có muốn xóa đề thi?',
       header: 'Xóa đề thi',
       icon: 'pi pi-exclamation-triangle',
-      accept: ()=> {
-        ExamService.deleteQuizz(id).then(()=> {
-          toast.success('Xóa thành công')
-        }).then(() => toast.error('Xóa thất bại'))
+      accept: () => {
+        ExamService.deleteQuizz(id)
+          .then(() => {
+            toast.success('Xóa thành công')
+          })
+          .then(() => toast.error('Xóa thất bại'))
       },
       reject: console.log,
       acceptLabel: 'Có',
@@ -49,23 +80,35 @@ const ExamManagementPage: NextPageWithLayout = () => {
   }
 
   const handleUpdateQuizz = (values: ExamFormModel): void => {
-    ExamService.updateQuizz(values).then(()=> {
-      toast.success('Cật nhật đề thi thành công')
-    }).catch(() => {
-      toast.error('Cập nhật bài thi thất bại!')
-    }).finally(toggleUpdate)
+    ExamService.updateQuizz({
+      ...values,
+      examTime: convertSubmitTime(values.examTime),
+      isEnd: convertSubmitTime(values.isEnd),
+      isStart: convertSubmitTime(values.isStart),
+    })
+      .then(() => {
+        toast.success('Cật nhật đề thi thành công')
+      })
+      .catch(() => {
+        toast.error('Cập nhật bài thi thất bại!')
+      })
+      .finally(toggleUpdate)
   }
 
   const handleCreateQuizz = (values: ExamFormModel): void => {
-    ExamService.createQuizz(values).then(()=> {
-      toast.success('Tạo đề thi thành công')
-    }).catch(() => {
-      toast.error('Tạo đề thi thất bại')
-    }).finally(toggleCreate)
+    ExamService.createQuizz(values)
+      .then(() => {
+        toast.success('Tạo đề thi thành công')
+      })
+      .catch(() => {
+        toast.error('Tạo đề thi thất bại')
+      })
+      .finally(toggleCreate)
   }
   return (
     <div className="pb-3 pt-1 py-4">
       <Button label="Tạo đề thi" className="p-button-success my-2" onClick={toggleCreate} />
+      <div className="d-flex flex-wrap">
       {subjects?.map((sub) => (
         <Subject
           key={sub.id}
@@ -74,6 +117,7 @@ const ExamManagementPage: NextPageWithLayout = () => {
             toggle()
             setSelectedSubject(sub)
           }}
+          className="mx-3"
           onDeleteClick={onDeleteClick}
           onSettingClick={() => {
             setUpdateSubject(sub)
@@ -81,6 +125,7 @@ const ExamManagementPage: NextPageWithLayout = () => {
           }}
         />
       ))}
+      </div>
       <ConfirmExamModal isOpen={isUpdateOpen}>
         <UpdateSubjectForm
           onSubmit={handleUpdateQuizz}
@@ -98,7 +143,11 @@ const ExamManagementPage: NextPageWithLayout = () => {
         />
       </ConfirmExamModal>
       <ConfirmExamModal isOpen={value}>
-        <Subject className="subject-bigger pb-2" subject={selectedSubject} onSettingClick={toggle} onDeleteClick={console.log}>
+        <Subject
+          className="subject-bigger pb-2"
+          subject={selectedSubject}
+          onSettingClick={toggle}
+          onDeleteClick={console.log}>
           <div className="d-flex justify-content-center align-items-center flex-column">
             <button type="button" className="btn btn-primary text-white w-50">
               Thực hành

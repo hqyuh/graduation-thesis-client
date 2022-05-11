@@ -6,7 +6,7 @@ const getAllTopic = (): Promise<ApiResponse<ExamModel[]>> => axiosClient.get('/q
 
 const updateQuizz =(quizz: ExamFormModel): Promise<ApiResponse<ExamFormModel>> => axiosClient.patch('/quizz/update',quizz)
 
-const deleteQuizz =(quizzId: string): Promise<unknown> => axiosClient.delete(`/quizz/update${quizzId}`)
+const deleteQuizz =(quizzId: string): Promise<unknown> => axiosClient.delete(`/quizz/delete/${quizzId}`)
 
 const createQuizz =(quizz: ExamFormModel): Promise<ApiResponse<ExamFormModel>> => axiosClient.post('/quizz/add',quizz)
 
