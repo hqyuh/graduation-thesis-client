@@ -114,7 +114,7 @@ const ExamManagementPage: NextPageWithLayout = () => {
     <div className="pb-3 pt-1 py-4">
       <Button label="Tạo đề thi" className="p-button-success my-2" onClick={toggleCreate} />
       <div className="d-flex flex-wrap">
-      {subjects?.map((sub) => (
+      {data?.map((sub) => (
         <Subject
           key={sub.id}
           subject={sub}

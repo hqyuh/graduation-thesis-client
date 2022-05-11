@@ -41,7 +41,15 @@ const InputAnswerBox: React.FC<Props & Partial<DetailedHTMLProps<InputHTMLAttrib
         ) : (
           <input checked={answer.checked} type="radio" className="form-check-input" {...props} onChange={
             (e: ChangeEvent<HTMLInputElement>) => {
-              setFieldValue(`answers[${index-1}].checked`, e.target.checked)
+              const newAnswers = formik.values.answers.map((answer, i) => {
+                if(i === index - 1){
+                  answer.checked = true
+                } else {
+                  answer.checked = false
+                }
+                return answer
+              })
+              setFieldValue(`answers`, newAnswers, false)
             }
           }/>
         )}

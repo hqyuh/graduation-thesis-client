@@ -10,11 +10,14 @@ const deleteQuizz =(quizzId: string): Promise<unknown> => axiosClient.delete(`/q
 
 const createQuizz =(quizz: ExamFormModel): Promise<ApiResponse<ExamFormModel>> => axiosClient.post('/quizz/add',quizz)
 
+const createQuestion =(ques: any): Promise<ApiResponse<any>> => axiosClient.post('/question/add',ques)
+
 const ExamService = {
   getAllTopic,
   updateQuizz,
   deleteQuizz,
-  createQuizz
+  createQuizz,
+  createQuestion
 }
 
 export default ExamService
