@@ -12,12 +12,15 @@ const createQuizz =(quizz: ExamFormModel): Promise<ApiResponse<ExamFormModel>> =
 
 const createQuestion =(ques: any): Promise<ApiResponse<any>> => axiosClient.post('/question/add',ques)
 
+const getOneQuizz = (id: string): Promise<ApiResponse<ExamModel>> => axiosClient.get(`/quizz/list/${id}`)
+
 const ExamService = {
   getAllTopic,
   updateQuizz,
   deleteQuizz,
   createQuizz,
-  createQuestion
+  createQuestion,
+  getOneQuizz
 }
 
 export default ExamService

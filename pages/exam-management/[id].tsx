@@ -1,11 +1,13 @@
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 import AnswerContainer from '../../components/AnswerContainer'
 import CheckBoxAnswer from '../../components/CheckBoxAnswer'
 import CreateQuestionContainer, { CreateQuestionForm } from '../../components/CreateQuestionContainer'
 import EssayAnswer from '../../components/EssayAnswer/indext'
 import { ANSWER_TITLE_ENUM, QUESTION_TYPE } from '../../constants'
 import withAuth from '../../hocs/withAuth'
+import ExamService from '../../services/exam-service'
 import getLayout from '../../shared/getLayout'
 import { NextPageWithLayout } from '../_app'
 
@@ -35,6 +37,9 @@ const Index: NextPageWithLayout = () => {
   const [initQuestion, setInitQuestion] = useState<CreateQuestionForm>(initialValues)
   const router = useRouter()
   const {id } = router.query
+  useEffect(()=> {
+    ExamService.getOneQuizz(id as string).catch(()=> toast.error('Không thể lấy danh sách câu hỏi'))
+  }, [id])
   const onSubmit = (values: CreateQuestionForm) => {
     const mapAnswersToProps = values.answers.reduce((acc, currentAnswer, index) => {
       acc[`answer${ANSWER_TITLE_ENUM[index]}` as string] = currentAnswer.content
@@ -48,7 +53,9 @@ const Index: NextPageWithLayout = () => {
       .map((answer) => ANSWER_TITLE_ENUM[answer.index])
       .join(',')
 
-    console.log({ ...values, ...mapAnswersToProps, correctResult, id })
+    ExamService.createQuestion({ ...values, ...mapAnswersToProps, correctResult, id }).then(()=> {
+      toast.success('Tạo câu hỏi thành công')
+    }).catch(()=> toast.error('Tạo câu hỏi thất bại!'))
   }
   const dummyAnswer = {
     answerA: 'Câu a',
