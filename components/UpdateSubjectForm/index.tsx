@@ -9,7 +9,7 @@ import TrashIcon from '../../icons/TrashIcon'
 import { ExamModel } from '../../models/exam.model'
 import InputWrapper from '../InputText'
 
-export type ExamFormModel = Omit<ExamModel, 'question' | 'activationCode' | 'dateCreated'>
+export type ExamFormModel = Omit<ExamModel, 'question' | 'activationCode' | 'dateCreated'> & { topicId: 0, currentTestName: string}
 
 export interface ExamFormEvent {
   onDeleteClick: (id: string) => void
@@ -28,7 +28,7 @@ const UpdateSubjectForm: React.FC<Props & ExamFormEvent> = ({
   onSettingClick,
 }) => {
   const formik = useFormik<ExamFormModel>({
-    initialValues,
+    initialValues: { ...initialValues, topicId: 0, currentTestName: initialValues.testName},
     onSubmit,
   })
 

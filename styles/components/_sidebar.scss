@@ -5,6 +5,8 @@
     background: $violet;
     height: 100vh;
     overflow-y: scroll;
+    position: sticky;
+    top: 0vh;
     &-item {
         transition: .5s;
         &:hover {

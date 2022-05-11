@@ -13,18 +13,6 @@ import ExamService from '../../services/exam-service'
 import getLayout from '../../shared/getLayout'
 import { NextPageWithLayout } from '../_app'
 
-const data = [
-  {
-    id: '',
-    testName: 'abc',
-    dateCreated: new Date(),
-    examTime: new Date(),
-    isStart: new Date(),
-    isEnd: new Date(),
-    activationCode: '',
-    question: [],
-  },
-]
 
 const ExamManagementPage: NextPageWithLayout = () => {
   const { toggle: toggleUpdate, value: isUpdateOpen } = useToggle(false)
@@ -48,21 +36,41 @@ const ExamManagementPage: NextPageWithLayout = () => {
       message: 'Bạn có muốn xóa đề thi?',
       header: 'Xóa đề thi',
       icon: 'pi pi-exclamation-triangle',
-      accept: console.log,
+      accept: ()=> {
+        ExamService.deleteQuizz(id).then(()=> {
+          toast.success('Xóa thành công')
+        }).then(() => toast.error('Xóa thất bại'))
+      },
       reject: console.log,
       acceptLabel: 'Có',
       rejectLabel: 'Không',
       acceptClassName: 'p-button-danger',
     })
   }
+
+  const handleUpdateQuizz = (values: ExamFormModel): void => {
+    ExamService.updateQuizz(values).then(()=> {
+      toast.success('Cật nhật đề thi thành công')
+    }).catch(() => {
+      toast.error('Cập nhật bài thi thất bại!')
+    }).finally(toggleUpdate)
+  }
+
+  const handleCreateQuizz = (values: ExamFormModel): void => {
+    ExamService.createQuizz(values).then(()=> {
+      toast.success('Tạo đề thi thành công')
+    }).catch(() => {
+      toast.error('Tạo đề thi thất bại')
+    }).finally(toggleCreate)
+  }
   return (
     <div className="pb-3 pt-1 py-4">
       <Button label="Tạo đề thi" className="p-button-success my-2" onClick={toggleCreate} />
-      {data?.map((sub) => (
+      {subjects?.map((sub) => (
         <Subject
           key={sub.id}
           subject={sub}
-          onClick={(e) => {
+          onClick={() => {
             toggle()
             setSelectedSubject(sub)
           }}
@@ -75,7 +83,7 @@ const ExamManagementPage: NextPageWithLayout = () => {
       ))}
       <ConfirmExamModal isOpen={isUpdateOpen}>
         <UpdateSubjectForm
-          onSubmit={console.log}
+          onSubmit={handleUpdateQuizz}
           initialValues={updateSubject as ExamFormModel}
           onSettingClick={() => toggleUpdate()}
           onDeleteClick={onDeleteClick}
@@ -83,14 +91,14 @@ const ExamManagementPage: NextPageWithLayout = () => {
       </ConfirmExamModal>
       <ConfirmExamModal isOpen={isCreateOpen}>
         <UpdateSubjectForm
-          onSubmit={console.log}
+          onSubmit={handleCreateQuizz}
           initialValues={{} as ExamFormModel}
           onSettingClick={() => toggleCreate()}
           onDeleteClick={onDeleteClick}
         />
       </ConfirmExamModal>
       <ConfirmExamModal isOpen={value}>
-        <Subject className="subject-bigger pb-2" subject={selectedSubject} onSettingClick={toggle}>
+        <Subject className="subject-bigger pb-2" subject={selectedSubject} onSettingClick={toggle} onDeleteClick={console.log}>
           <div className="d-flex justify-content-center align-items-center flex-column">
             <button type="button" className="btn btn-primary text-white w-50">
               Thực hành

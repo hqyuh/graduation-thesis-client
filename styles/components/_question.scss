@@ -1,5 +1,4 @@
 .create-question {
-  background-color: #8f60de;
   .dropdown {
     position: absolute;
     left: 5px;
@@ -26,7 +25,7 @@
 }
 
 .row.my-2 {
-    gap: 12px;
+  gap: 12px;
 }
 
 .answer-box {
@@ -35,9 +34,9 @@
   border-radius: 15px;
   width: 240px;
   .answer-insert {
-      &::placeholder {
-          color: white;
-      }
+    &::placeholder {
+      color: white;
+    }
   }
 }
 
@@ -56,4 +55,16 @@ $answers-insert: #156c9d, #23a17c, #9a29ad, #c63650;
   .answer-insert-#{$i} {
     background: $answer;
   }
+}
+
+.answer-container {
+  background-color: #ffff;
+  height: fit-content;
+  box-shadow: 1px 4px 20px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+.create-question-container {
+  position:sticky;
+  bottom: 0vh;
 }

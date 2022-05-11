@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable prefer-template */
 /* eslint-disable react/no-array-index-key */
 import React, { useState } from 'react'
@@ -25,6 +27,7 @@ export type CreateQuestionForm = {
   topicQuestion: string
   mark: 0,
   type?: keyof typeof QUESTION_TYPE
+  content?: string
 }
 
 const CreateQuestionContainer: React.FC<Props> = ({ initialValues, onSubmit }) => {
@@ -53,7 +56,7 @@ const CreateQuestionContainer: React.FC<Props> = ({ initialValues, onSubmit }) =
   }
   return (
     <>
-      <div className="bg py-4 px-3">
+      <div className="bg py-4 px-3 create-question-container">
         <div className="create-question d-flex justify-content-center align-items-center position-relative">
           <div className="dropdown">
             <Dropdown
@@ -103,7 +106,7 @@ const CreateQuestionContainer: React.FC<Props> = ({ initialValues, onSubmit }) =
               </div>
             </div>
           )}
-          {questionType === QUESTION_TYPE.Essay && <InputAnswerArea nane="answer" onChange={handleChange} />}
+          {questionType === QUESTION_TYPE.Essay && <InputAnswerArea nane="content" onChange={handleChange as any} />}
         </div>
       </div>
       <div className="d-flex align-items-center justify-content-end mt-2">

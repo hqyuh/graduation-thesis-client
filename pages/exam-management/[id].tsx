@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
+import AnswerContainer from '../../components/AnswerContainer'
+import CheckBoxAnswer from '../../components/CheckBoxAnswer'
 import CreateQuestionContainer, { CreateQuestionForm } from '../../components/CreateQuestionContainer'
+import EssayAnswer from '../../components/EssayAnswer/indext'
 import { ANSWER_TITLE_ENUM, QUESTION_TYPE } from '../../constants'
 import withAuth from '../../hocs/withAuth'
 import getLayout from '../../shared/getLayout'
@@ -31,7 +34,7 @@ const Index: NextPageWithLayout = () => {
   const [initQuestion, setInitQuestion] = useState<CreateQuestionForm>(initialValues)
   const onSubmit = (values: CreateQuestionForm) => {
     const mapAnswersToProps = values.answers.reduce((acc, currentAnswer, index) => {
-      acc[`answer${ANSWER_TITLE_ENUM[index]}` as any] = currentAnswer.content
+      acc[`answer${ANSWER_TITLE_ENUM[index]}` as string] = currentAnswer.content
       return acc
     }, {})
     const correctResult = values.answers
@@ -41,11 +44,26 @@ const Index: NextPageWithLayout = () => {
       })
       .map((answer) => ANSWER_TITLE_ENUM[answer.index])
       .join(',')
-    
-    console.log({...values, ... mapAnswersToProps, correctResult})
+
+    console.log({ ...values, ...mapAnswersToProps, correctResult })
+  }
+  const dummyAnswer = {
+    answerA: 'Câu a',
+    answerB: 'Câu a',
+    answerC: 'Câu a',
+    answerD: 'Câu a',
   }
   return (
     <div>
+      <AnswerContainer content="hỏi gì" index={2}>
+        <CheckBoxAnswer type="Checkbox" {...dummyAnswer} />
+      </AnswerContainer>
+      <AnswerContainer content="hỏi gì" index={2}>
+        <EssayAnswer/>
+      </AnswerContainer>
+      <AnswerContainer content="hỏi gì" index={2}>
+        <CheckBoxAnswer type="Radio" {...dummyAnswer} />
+      </AnswerContainer>
       <CreateQuestionContainer onSubmit={onSubmit} initialValues={initQuestion} />
     </div>
   )
