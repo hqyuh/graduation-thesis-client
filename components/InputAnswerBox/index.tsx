@@ -2,9 +2,10 @@
 import React, { ChangeEvent, DetailedHTMLProps, InputHTMLAttributes } from 'react'
 import { Checkbox, CheckboxChangeParams } from 'primereact/checkbox'
 import { InputTextarea } from 'primereact/inputtextarea'
-import { FormikHelpers } from 'formik'
+import { FormikHelpers, FormikProps } from 'formik'
 import TrashIcon from '../../icons/TrashIcon'
 import { QUESTION_TYPE } from '../../constants'
+import { CreateQuestionForm } from '../CreateQuestionContainer'
 
 interface Props {
   index: number
@@ -15,6 +16,7 @@ interface Props {
     checked: boolean
   }
   onTrashClick: (index: number) => void
+  formik: FormikProps<CreateQuestionForm>
 }
 
 const InputAnswerBox: React.FC<Props & Partial<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, any>>> = ({
@@ -23,6 +25,7 @@ const InputAnswerBox: React.FC<Props & Partial<DetailedHTMLProps<InputHTMLAttrib
   answer,
   setFieldValue,
   onTrashClick,
+  formik,
   ...props
 }) => (
   <div className={`col-3 answer-box answer-box-${index}`}>

@@ -95,6 +95,7 @@ const CreateQuestionContainer: React.FC<Props> = ({ initialValues, onSubmit }) =
                 setFieldValue={setFieldValue}
                 answer={answer}
                 onTrashClick={onTrashClick}
+                formik={formik}
               />
             ))}
           {questionType !== QUESTION_TYPE.Essay && formik.values?.answers?.length < 4 && (

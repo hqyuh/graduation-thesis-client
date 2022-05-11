@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import AnswerContainer from '../../components/AnswerContainer'
 import CheckBoxAnswer from '../../components/CheckBoxAnswer'
@@ -32,6 +33,8 @@ const initialValues: CreateQuestionForm = {
 }
 const Index: NextPageWithLayout = () => {
   const [initQuestion, setInitQuestion] = useState<CreateQuestionForm>(initialValues)
+  const router = useRouter()
+  const {id } = router.query
   const onSubmit = (values: CreateQuestionForm) => {
     const mapAnswersToProps = values.answers.reduce((acc, currentAnswer, index) => {
       acc[`answer${ANSWER_TITLE_ENUM[index]}` as string] = currentAnswer.content
@@ -45,7 +48,7 @@ const Index: NextPageWithLayout = () => {
       .map((answer) => ANSWER_TITLE_ENUM[answer.index])
       .join(',')
 
-    console.log({ ...values, ...mapAnswersToProps, correctResult })
+    console.log({ ...values, ...mapAnswersToProps, correctResult, id })
   }
   const dummyAnswer = {
     answerA: 'Câu a',
