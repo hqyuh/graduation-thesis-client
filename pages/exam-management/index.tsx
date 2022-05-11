@@ -5,6 +5,7 @@ import { Button } from 'primereact/button'
 import { confirmDialog } from 'primereact/confirmdialog'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import { date } from 'yup/lib/locale'
 import ConfirmExamModal from '../../components/ConfirmExamModal'
 import Subject from '../../components/Subject'
 import UpdateSubjectForm, { ExamFormModel } from '../../components/UpdateSubjectForm'
@@ -82,6 +83,8 @@ const ExamManagementPage: NextPageWithLayout = () => {
   }
 
   const handleUpdateQuizz = (values: ExamFormModel): void => {
+    delete values.questions
+    delete values.dateCreated
     ExamService.updateQuizz({
       ...values,
       examTime: convertSubmitTime(values.examTime),
