@@ -5,7 +5,6 @@ import { Button } from 'primereact/button'
 import { confirmDialog } from 'primereact/confirmdialog'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { date } from 'yup/lib/locale'
 import ConfirmExamModal from '../../components/ConfirmExamModal'
 import Subject from '../../components/Subject'
 import UpdateSubjectForm, { ExamFormModel } from '../../components/UpdateSubjectForm'
@@ -101,7 +100,12 @@ const ExamManagementPage: NextPageWithLayout = () => {
   }
 
   const handleCreateQuizz = (values: ExamFormModel): void => {
-    ExamService.createQuizz(values)
+    ExamService.createQuizz({
+      ...values,
+      examTime: moment(values.examTime, 'HH:mm:ss: A').diff(moment().startOf('day'), 'seconds'),
+      isEnd: convertSubmitTime(values.isEnd),
+      isStart: convertSubmitTime(values.isStart),
+    })
       .then(() => {
         toast.success('Tạo đề thi thành công')
       })
@@ -114,7 +118,7 @@ const ExamManagementPage: NextPageWithLayout = () => {
     <div className="pb-3 pt-1 py-4">
       <Button label="Tạo đề thi" className="p-button-success my-2" onClick={toggleCreate} />
       <div className="d-flex flex-wrap">
-      {data?.map((sub) => (
+      {subjects?.map((sub) => (
         <Subject
           key={sub.id}
           subject={sub}
