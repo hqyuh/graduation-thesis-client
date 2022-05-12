@@ -7,6 +7,7 @@ import CreateQuestionContainer, { CreateQuestionForm } from '../../components/Cr
 import EssayAnswer from '../../components/EssayAnswer/indext'
 import { ANSWER_TITLE_ENUM, QUESTION_TYPE } from '../../constants'
 import withAuth from '../../hocs/withAuth'
+import { ExamModel, QuestionModel } from '../../models/exam.model'
 import ExamService from '../../services/exam-service'
 import getLayout from '../../shared/getLayout'
 import { NextPageWithLayout } from '../_app'
@@ -35,11 +36,72 @@ const initialValues: CreateQuestionForm = {
 }
 const Index: NextPageWithLayout = () => {
   const [initQuestion, setInitQuestion] = useState<CreateQuestionForm>(initialValues)
+  const [selectedQuizz, setSelectedQuizz] = useState<ExamModel>({} as ExamModel)
+  const [isUpdating, setIsUpdating] = useState<boolean>(false)
+  const [initialQuestion, setInialQuestion] = useState([initialValues])
   const router = useRouter()
-  const {id } = router.query
-  useEffect(()=> {
-    ExamService.getOneQuizz(id as string).catch(()=> toast.error('Không thể lấy danh sách câu hỏi'))
+  const { id } = router.query
+  useEffect(() => {
+    ExamService.getOneQuizz(id as string)
+      .catch((res) => {
+        setSelectedQuizz(res.data)
+        const newQues = [
+          {
+            id: 3,
+            topicQuestion: 'How can you achieve runtime polymorphism in Java?',
+            questionImageUrl: '',
+            answerA: 'method overloading',
+            answerB: 'method overrunning',
+            answerC: 'method overriding',
+            answerD: 'method calling',
+            correctResult: 'C',
+            mark: 2.5,
+            milestones: 1,
+            dateCreated: '11-04-2022 10:11:33',
+            type: 'Checkbox',
+          },
+          {
+            id: 5,
+            topicQuestion: 'The runtime system starts your program by calling which function first?',
+            questionImageUrl: null,
+            answerA: 'print',
+            answerB: 'iterative',
+            answerC: 'hello',
+            answerD: 'main',
+            correctResult: 'D',
+            mark: 2.5,
+            milestones: 1,
+            dateCreated: '11-04-2022 10:11:33',
+            type: 'Radio',
+          },
+          {
+            id: 78,
+            topicQuestion: 'The runtime system starts your program by calling which function first?',
+            questionImageUrl: null,
+            answerA: null,
+            answerB: null,
+            answerC: null,
+            answerD: null,
+            correctResult: null,
+            mark: 2.5,
+            milestones: 1,
+            dateCreated: null,
+            type: 'Essay',
+          },
+        ].map((ques: QuestionModel) => {
+          const { answerA, answerB, answerC, answerD } = ques
+          const answers = [answerA, answerB, answerC, answerD]
+          return {
+            ...ques,
+            answers: answers.map((ans) => ({ content: ans, checked: false })),
+          }
+        })
+        setInialQuestion(newQues)
+      })
+      .catch(() => toast.error('Không thể lấy danh sách câu hỏi'))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
+
   const onSubmit = (values: CreateQuestionForm) => {
     const mapAnswersToProps = values.answers.reduce((acc, currentAnswer, index) => {
       acc[`answer${ANSWER_TITLE_ENUM[index]}` as string] = currentAnswer.content
@@ -52,28 +114,40 @@ const Index: NextPageWithLayout = () => {
       })
       .map((answer) => ANSWER_TITLE_ENUM[answer.index])
       .join(',')
-
-    ExamService.createQuestion({ ...values, ...mapAnswersToProps, correctResult, id }).then(()=> {
-      toast.success('Tạo câu hỏi thành công')
-    }).catch(()=> toast.error('Tạo câu hỏi thất bại!'))
-  }
-  const dummyAnswer = {
-    answerA: 'Câu a',
-    answerB: 'Câu a',
-    answerC: 'Câu a',
-    answerD: 'Câu a',
+    if(isUpdating === true ) {
+      ExamService.updateQuestion({ ...values, ...mapAnswersToProps, correctResult, id })
+      .then(() => {
+        toast.success('Cập nhât câu hỏi thành công')
+        setIsUpdating(false)
+      })
+      .catch(() => toast.error('Cập nhât hỏi thất bại!'))
+    }
+    ExamService.createQuestion({ ...values, ...mapAnswersToProps, correctResult, id })
+      .then(() => {
+        toast.success('Tạo câu hỏi thành công')
+      })
+      .catch(() => toast.error('Tạo câu hỏi thất bại!'))
   }
   return (
     <div>
-      <AnswerContainer content="hỏi gì" index={2}>
-        <CheckBoxAnswer type="Checkbox" {...dummyAnswer} />
-      </AnswerContainer>
-      <AnswerContainer content="hỏi gì" index={2}>
-        <EssayAnswer/>
-      </AnswerContainer>
-      <AnswerContainer content="hỏi gì" index={2}>
-        <CheckBoxAnswer type="Radio" {...dummyAnswer} />
-      </AnswerContainer>
+      {initialQuestion.map((ques, index) => (
+        <AnswerContainer content={ques.topicQuestion} index={index} key={ques.id} id={ques.id} onUpdateClick={() => {
+          setInitQuestion(ques)
+          setIsUpdating(true)
+        }}>
+          {ques.type === QUESTION_TYPE.Essay ? (
+            <EssayAnswer />
+          ) : (
+            <CheckBoxAnswer
+              type={ques.type}
+              answerA={ques.answerA}
+              answerB={ques.answerB}
+              answerC={ques.answerC}
+              answerD={ques.answerD}
+            />
+          )}
+        </AnswerContainer>
+      ))}
       <CreateQuestionContainer onSubmit={onSubmit} initialValues={initQuestion} />
     </div>
   )

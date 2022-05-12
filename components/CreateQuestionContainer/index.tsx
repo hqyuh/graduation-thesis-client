@@ -28,9 +28,11 @@ export type CreateQuestionForm = {
   mark: 0,
   type?: keyof typeof QUESTION_TYPE
   content?: string
+  id: string
 }
 
 const CreateQuestionContainer: React.FC<Props> = ({ initialValues, onSubmit }) => {
+  console.log(initialValues)
   const [questionType, setQuestionType] = useState<keyof typeof QUESTION_TYPE>(QUESTION_TYPE.Checkbox)
   const formik = useFormik<CreateQuestionForm>({
     enableReinitialize: true,
@@ -62,7 +64,7 @@ const CreateQuestionContainer: React.FC<Props> = ({ initialValues, onSubmit }) =
             <Dropdown
               optionLabel="name"
               optionValue="name"
-              value={questionType || 'Checkbox'}
+              value={formik.values.type || questionType}
               options={cities}
               onChange={(e) => setQuestionType(e.value as any)}
               className="custom"
@@ -82,6 +84,7 @@ const CreateQuestionContainer: React.FC<Props> = ({ initialValues, onSubmit }) =
             className="w-100 rounded-15 bg-white question-insert"
             name="topicQuestion"
             onChange={handleChange}
+            value={formik.values.topicQuestion}
           />
         </div>
         <div className="row my-2 justify-content-center">

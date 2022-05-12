@@ -14,13 +14,19 @@ const createQuestion =(ques: any): Promise<ApiResponse<any>> => axiosClient.post
 
 const getOneQuizz = (id: string): Promise<ApiResponse<ExamModel>> => axiosClient.get(`/quizz/list/${id}`)
 
+const deleteQuestion = (id: string): Promise<ApiResponse<unknown>> => axiosClient.delete(`/question/${id}`)
+
+const updateQuestion = (payload: any): Promise<ApiResponse<unknown>> => axiosClient.patch(`/question/update`, payload)
+
 const ExamService = {
   getAllTopic,
   updateQuizz,
   deleteQuizz,
   createQuizz,
   createQuestion,
-  getOneQuizz
+  getOneQuizz,
+  deleteQuestion,
+  updateQuestion,
 }
 
 export default ExamService

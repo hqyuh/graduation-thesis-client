@@ -63,6 +63,7 @@ const InputAnswerBox: React.FC<Props & Partial<DetailedHTMLProps<InputHTMLAttrib
           onChange={   (e: ChangeEvent<HTMLTextAreaElement>) => {
             setFieldValue(`answers[${index-1}].content`, e.target.value)
           }}
+          defaultValue={answer.content}
         />
       </div>
     </div>

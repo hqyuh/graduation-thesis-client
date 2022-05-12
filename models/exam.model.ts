@@ -9,7 +9,7 @@ export interface ExamModel {
   isStart: Date | Moment
   isEnd: Date | Moment
   activationCode: string
-  questions: QuestionModel
+  questions: QuestionModel[]
 }
 
 export interface QuestionModel extends AnswersResponseTuple {

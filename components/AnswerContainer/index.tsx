@@ -1,18 +1,22 @@
 import { confirmDialog } from 'primereact/confirmdialog'
 import { SplitButton } from 'primereact/splitbutton'
 import React from 'react'
+import { toast } from 'react-toastify'
+import ExamService from '../../services/exam-service'
 
 interface Props {
     index: number
     content: string
+    id: string | number
+    onUpdateClick : () => void
 }
 
-const AnswerContainer: React.FC<Props> = ({children, content, index}) => {
+const AnswerContainer: React.FC<Props> = ({children, content, index, id, onUpdateClick}) => {
     const items = [
         {
             label: 'Update',
             icon: 'pi pi-refresh',
-            command: () => {},
+            command: onUpdateClick,
         },
         {
             label: 'Delete',
@@ -22,7 +26,11 @@ const AnswerContainer: React.FC<Props> = ({children, content, index}) => {
                     message: 'Bạn có muốn xóa câu hỏi?',
                     header: 'Xóa câu hỏi',
                     icon: 'pi pi-exclamation-triangle',
-                    accept: console.log,
+                    accept: () => {
+                        ExamService.deleteQuestion(id).then(() => {
+                            toast.success('Xóa thành công')
+                        }).catch(() => toast.error('Xóa thất bại'))
+                    },
                     reject: console.log,
                     acceptLabel: 'Có',
                     rejectLabel: 'Không',
