@@ -34,6 +34,51 @@ const initialValues: CreateQuestionForm = {
   topicQuestion: '',
   mark: 0,
 }
+
+const data = [
+  {
+    id: 3,
+    topicQuestion: 'How can you achieve runtime polymorphism in Java?',
+    questionImageUrl: '',
+    answerA: 'method overloading',
+    answerB: 'method overrunning',
+    answerC: 'method overriding',
+    answerD: 'method calling',
+    correctResult: 'C',
+    mark: 2.5,
+    milestones: 1,
+    dateCreated: '11-04-2022 10:11:33',
+    type: 'Checkbox',
+  },
+  {
+    id: 5,
+    topicQuestion: 'The runtime system starts your program by calling which function first?',
+    questionImageUrl: null,
+    answerA: 'print',
+    answerB: 'iterative',
+    answerC: 'hello',
+    answerD: 'main',
+    correctResult: 'D',
+    mark: 2.5,
+    milestones: 1,
+    dateCreated: '11-04-2022 10:11:33',
+    type: 'Radio',
+  },
+  {
+    id: 78,
+    topicQuestion: 'The runtime system starts your program by calling which function first?',
+    questionImageUrl: null,
+    answerA: null,
+    answerB: null,
+    answerC: null,
+    answerD: null,
+    correctResult: null,
+    mark: 2.5,
+    milestones: 1,
+    dateCreated: null,
+    type: 'Essay',
+  },
+]
 const Index: NextPageWithLayout = () => {
   const [initQuestion, setInitQuestion] = useState<CreateQuestionForm>(initialValues)
   const [selectedQuizz, setSelectedQuizz] = useState<ExamModel>({} as ExamModel)
@@ -45,50 +90,7 @@ const Index: NextPageWithLayout = () => {
     ExamService.getOneQuizz(id as string)
       .catch((res) => {
         setSelectedQuizz(res.data)
-        const newQues = [
-          {
-            id: 3,
-            topicQuestion: 'How can you achieve runtime polymorphism in Java?',
-            questionImageUrl: '',
-            answerA: 'method overloading',
-            answerB: 'method overrunning',
-            answerC: 'method overriding',
-            answerD: 'method calling',
-            correctResult: 'C',
-            mark: 2.5,
-            milestones: 1,
-            dateCreated: '11-04-2022 10:11:33',
-            type: 'Checkbox',
-          },
-          {
-            id: 5,
-            topicQuestion: 'The runtime system starts your program by calling which function first?',
-            questionImageUrl: null,
-            answerA: 'print',
-            answerB: 'iterative',
-            answerC: 'hello',
-            answerD: 'main',
-            correctResult: 'D',
-            mark: 2.5,
-            milestones: 1,
-            dateCreated: '11-04-2022 10:11:33',
-            type: 'Radio',
-          },
-          {
-            id: 78,
-            topicQuestion: 'The runtime system starts your program by calling which function first?',
-            questionImageUrl: null,
-            answerA: null,
-            answerB: null,
-            answerC: null,
-            answerD: null,
-            correctResult: null,
-            mark: 2.5,
-            milestones: 1,
-            dateCreated: null,
-            type: 'Essay',
-          },
-        ].map((ques: QuestionModel) => {
+        const newQues = res.data?.questions.map((ques: QuestionModel) => {
           const { answerA, answerB, answerC, answerD } = ques
           const answers = [answerA, answerB, answerC, answerD]
           return {
