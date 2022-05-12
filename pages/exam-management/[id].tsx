@@ -88,7 +88,7 @@ const Index: NextPageWithLayout = () => {
   const { id } = router.query
   useEffect(() => {
     ExamService.getOneQuizz(id as string)
-      .catch((res) => {
+      .then((res) => {
         setSelectedQuizz(res.data)
         const newQues = res.data?.questions.map((ques: QuestionModel) => {
           const { answerA, answerB, answerC, answerD } = ques
@@ -98,12 +98,12 @@ const Index: NextPageWithLayout = () => {
             answers: answers.map((ans) => ({ content: ans, checked: false })),
           }
         })
+        console.log(newQues)
         setInialQuestion(newQues)
       })
       .catch(() => toast.error('Không thể lấy danh sách câu hỏi'))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
-
   const onSubmit = (values: CreateQuestionForm) => {
     const mapAnswersToProps = values.answers.reduce((acc, currentAnswer, index) => {
       acc[`answer${ANSWER_TITLE_ENUM[index]}` as string] = currentAnswer.content
@@ -117,18 +117,21 @@ const Index: NextPageWithLayout = () => {
       .map((answer) => ANSWER_TITLE_ENUM[answer.index])
       .join(',')
     if(isUpdating === true ) {
-      ExamService.updateQuestion({ ...values, ...mapAnswersToProps, correctResult, id })
+      delete values.answers
+      ExamService.updateQuestion({ ...values, ...mapAnswersToProps, correctResult, quizzId: id })
       .then(() => {
         toast.success('Cập nhât câu hỏi thành công')
         setIsUpdating(false)
       })
       .catch(() => toast.error('Cập nhât hỏi thất bại!'))
     }
-    ExamService.createQuestion({ ...values, ...mapAnswersToProps, correctResult, id })
+    else {
+      ExamService.createQuestion({ ...values, ...mapAnswersToProps, correctResult, id })
       .then(() => {
         toast.success('Tạo câu hỏi thành công')
       })
       .catch(() => toast.error('Tạo câu hỏi thất bại!'))
+    }
   }
   return (
     <div>
