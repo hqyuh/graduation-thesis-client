@@ -31,11 +31,6 @@ const Sidebar: React.FC = () => {
         router: '/exam-management',
       },
       {
-        icon: <LibIcon />,
-        label: t('lib_manage'),
-        router: '/libraries',
-      },
-      {
         icon: <MarkManagementIcon />,
         label: t('mark_manage'),
         router: '/mark',

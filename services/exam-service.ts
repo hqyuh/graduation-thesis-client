@@ -1,3 +1,4 @@
+import { UserAnswersModel } from './../pages/test/[activationCode]';
 import { ExamFormModel } from "../components/UpdateSubjectForm/index";
 import { ApiResponse, axiosClient } from '../lib/client'
 import { ExamModel } from '../models/exam.model'
@@ -18,6 +19,11 @@ const deleteQuestion = (id: string): Promise<ApiResponse<unknown>> => axiosClien
 
 const updateQuestion = (payload: any): Promise<ApiResponse<unknown>> => axiosClient.patch(`/question/update`, payload)
 
+const getQuizzByCode = (code: string): Promise<ApiResponse<ExamModel>> => axiosClient.get(`/question/code/${code}`)
+
+const saveUserAnswer = (payload: UserAnswersModel[]): Promise<ApiResponse<unknown>> => axiosClient.post(`/user-answer/save-answer`, payload)
+
+
 const ExamService = {
   getAllTopic,
   updateQuizz,
@@ -27,6 +33,8 @@ const ExamService = {
   getOneQuizz,
   deleteQuestion,
   updateQuestion,
+  getQuizzByCode,
+  saveUserAnswer,
 }
 
 export default ExamService

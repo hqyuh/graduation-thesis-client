@@ -35,7 +35,7 @@ const initialValues: CreateQuestionForm = {
   mark: 0,
 }
 
-const data = [
+export const data = [
   {
     id: 3,
     topicQuestion: 'How can you achieve runtime polymorphism in Java?',

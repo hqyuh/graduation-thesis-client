@@ -9,9 +9,10 @@ interface Props {
     content: string
     id: string | number
     onUpdateClick : () => void
+    type: 'update' | 'exam'
 }
 
-const AnswerContainer: React.FC<Props> = ({children, content, index, id, onUpdateClick}) => {
+const AnswerContainer: React.FC<Props> = ({children, content, index, id, onUpdateClick, type}) => {
     const items = [
         {
             label: 'Update',
@@ -45,7 +46,9 @@ const AnswerContainer: React.FC<Props> = ({children, content, index, id, onUpdat
             <div className="d-flex align-items-center">
             <strong>Câu hỏi {index + 1}</strong>: &nbsp;<div className="content pb-0">{content}</div>
             </div>
-            <SplitButton icon="pi-star-fill" model={items} />
+            {
+                type === 'update' && (<SplitButton icon="pi-star-fill" model={items} />)
+            }
             </div>
             <div className="px-4 py-2">
                 {children}
@@ -54,4 +57,9 @@ const AnswerContainer: React.FC<Props> = ({children, content, index, id, onUpdat
     )
     
 }
+
+AnswerContainer.defaultProps = {
+    type: 'update',
+}
+
 export default AnswerContainer

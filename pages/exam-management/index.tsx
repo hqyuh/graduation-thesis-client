@@ -158,7 +158,9 @@ const ExamManagementPage: NextPageWithLayout = () => {
           onSettingClick={toggle}
           onDeleteClick={console.log}>
           <div className="d-flex justify-content-center align-items-center flex-column">
-            <button type="button" className="btn btn-primary text-white w-50">
+            <button type="button" className="btn btn-primary text-white w-50" onClick={() => {
+              router.push(`/test/${selectedSubject.activationCode}`)
+            }}>
               Thực hành
             </button>
             <button type="button" className="btn btn-primary text-white w-50 mt-2" onClick={()=> {

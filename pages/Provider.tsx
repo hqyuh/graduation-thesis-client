@@ -18,6 +18,7 @@ const Provider: React.FC = ({ children }) => (
         pauseOnFocusLoss
         draggable
         pauseOnHover
+        limit={1}
       />
       <ToastContainer />
 
