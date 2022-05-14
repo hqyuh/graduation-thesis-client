@@ -8,6 +8,7 @@ import CheckBoxAnswer from '../../components/CheckBoxAnswer'
 import EssayAnswer from '../../components/EssayAnswer/indext'
 import { QUESTION_TYPE } from '../../constants'
 import withAuth from '../../hocs/withAuth'
+import { loadFromLocalStorage, removeFromLocalStorage, saveToLocalStorage } from '../../lib/localStorage'
 import { ExamModel, QuestionModel } from '../../models/exam.model'
 import ExamService from '../../services/exam-service'
 import getLayout from '../../shared/getLayout'
@@ -28,6 +29,20 @@ const Index: NextPageWithLayout = () =>{
   const [quizz,setQuizz] = useState<ExamModel>({})
   const router = useRouter()
   const { activationCode } = router.query
+  const formik = useFormik<{ answers: UserAnswersModel[]}>({
+    initialValues: loadFromLocalStorage('answers') || {
+      answers: [],
+    },
+    onSubmit: (values) => {
+      ExamService.saveUserAnswer(values.answers).then(()=> {
+        router.replace(`/test/success/${quizz?.id}`)
+        toast.success('Cám ơn bạn đã tham gia làm bài thi')
+        removeFromLocalStorage('answers')
+      }).catch(()=> {
+        toast.error('Không thể nộp bài thi, đã có lỗi xảy ra')
+      })
+    },
+  })
   useEffect(() => {
     if(activationCode){
       ExamService.getOneQuizz(activationCode as string)
@@ -42,24 +57,15 @@ const Index: NextPageWithLayout = () =>{
           }
         })
         setInitialQuestion(newQues)
+        return () => {
+          saveToLocalStorage('answers', formik.values)
+        }
       })
       .catch(() => toast.error('Không thể lấy danh sách câu hỏi'))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activationCode])
-  const formik = useFormik<{ answers: UserAnswersModel[]}>({
-    initialValues: {
-      answers: [],
-    },
-    onSubmit: (values) => {
-      ExamService.saveUserAnswer(values.answers).then(()=> {
-        router.replace(`/test/success/${quizz?.id}`)
-        toast.success('Cám ơn bạn đã tham gia làm bài thi')
-      }).catch(()=> {
-        toast.error('Không thể nộp bài thi, đã có lỗi xảy ra')
-      })
-    },
-  })
+
   const {setFieldValue} = formik
   return (
     <div className="p-3">
