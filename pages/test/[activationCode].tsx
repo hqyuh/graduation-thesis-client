@@ -45,7 +45,6 @@ const Index: NextPageWithLayout = () =>{
       })
       .catch(() => toast.error('Không thể lấy danh sách câu hỏi'))
     }
-    console.log('render')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activationCode])
   const formik = useFormik<{ answers: UserAnswersModel[]}>({
@@ -54,7 +53,7 @@ const Index: NextPageWithLayout = () =>{
     },
     onSubmit: (values) => {
       ExamService.saveUserAnswer(values.answers).then(()=> {
-        router.replace('/')
+        router.replace(`/test/success/${quizz?.id}`)
         toast.success('Cám ơn bạn đã tham gia làm bài thi')
       }).catch(()=> {
         toast.error('Không thể nộp bài thi, đã có lỗi xảy ra')
