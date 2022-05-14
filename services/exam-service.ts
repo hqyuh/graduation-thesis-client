@@ -13,13 +13,13 @@ const createQuizz =(quizz: ExamFormModel): Promise<ApiResponse<ExamFormModel>> =
 
 const createQuestion =(ques: any): Promise<ApiResponse<any>> => axiosClient.post('/question/add',ques)
 
-const getOneQuizz = (id: string): Promise<ApiResponse<ExamModel>> => axiosClient.get(`/quizz/find/${id}`)
+const getOneQuizz = (id: string): Promise<ApiResponse<ExamModel>> => axiosClient.get(`/find/${id}`)
 
 const deleteQuestion = (id: string): Promise<ApiResponse<unknown>> => axiosClient.delete(`/question/delete/${id}`)
 
 const updateQuestion = (payload: any): Promise<ApiResponse<unknown>> => axiosClient.patch(`/question/update`, payload)
 
-const getQuizzByCode = (code: string): Promise<ApiResponse<ExamModel>> => axiosClient.get(`/question/code/${code}`)
+const getQuizzByCode = (code: string): Promise<ApiResponse<ExamModel>> => axiosClient.get(`/quizz/code/${code}`)
 
 const saveUserAnswer = (payload: UserAnswersModel[]): Promise<ApiResponse<unknown>> => axiosClient.post(`/user-answer/save-answer`, payload)
 

@@ -45,10 +45,10 @@ const Index: NextPageWithLayout = () =>{
   })
   useEffect(() => {
     if(activationCode){
-      ExamService.getOneQuizz(activationCode as string)
+      ExamService.getQuizzByCode(activationCode as string)
       .then((res) => {
         setQuizz(res.data)
-        const newQues = data.map((ques: QuestionModel) => {
+        const newQues = res.data.questions.map((ques: QuestionModel) => {
           const { answerA, answerB, answerC, answerD } = ques
           const answers = [answerA, answerB, answerC, answerD]
           return {
@@ -92,7 +92,7 @@ const Index: NextPageWithLayout = () =>{
         </AnswerContainer>
       ))}
       <div className="d-flex justify-content-end mt-3">
-        <button type="submit" className="text-white button font-weight-700 btn-primary w-100">Nộp bài</button>
+        <button type="submit" className="text-white button font-weight-700 btn-primary w-100" onClick={formik.handleSubmit}>Nộp bài</button>
       </div>
     </div>
   )}

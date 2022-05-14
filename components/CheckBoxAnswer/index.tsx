@@ -49,7 +49,7 @@ const CheckBoxAnswer: React.FC<Props> = ({ type, answerA, answerB, answerC, answ
       {answers.map((answer, i) => (
         // eslint-disable-next-line react/no-array-index-key
         <div className="col-6 d-flex align-items-center py-3" key={i}>
-          <input className="form-check-input" type={type.toLowerCase()} name={`radio-${index}`} onChange={onAnswerChange(i as answerIndexUnion )}/>
+          <input className="form-check-input" type={type} name={`radio-${index}`} onChange={onAnswerChange(i as answerIndexUnion )}/>
           <div className="mx-2">{answer}</div>
         </div>
       ))}

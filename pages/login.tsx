@@ -13,6 +13,9 @@ import { useTranslations } from '../context/Localization'
 import { FaceBookIcon } from '../icons'
 import GoogleIcon from '../icons/GoogleIcon'
 
+
+
+
 const schema = yup.object().shape({
   email: yup.string().email(YUP_MESSAGE.EMAIL).required(YUP_MESSAGE.REQUIRED),
   password: yup.string().required(YUP_MESSAGE.REQUIRED),
