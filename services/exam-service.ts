@@ -13,7 +13,7 @@ const createQuizz =(quizz: ExamFormModel): Promise<ApiResponse<ExamFormModel>> =
 
 const createQuestion =(ques: any): Promise<ApiResponse<any>> => axiosClient.post('/question/add',ques)
 
-const getOneQuizz = (id: string): Promise<ApiResponse<ExamModel>> => axiosClient.get(`/find/${id}`)
+const getOneQuizz = (id: string): Promise<ApiResponse<ExamModel>> => axiosClient.get(`quizz/find/${id}`)
 
 const deleteQuestion = (id: string): Promise<ApiResponse<unknown>> => axiosClient.delete(`/question/delete/${id}`)
 
@@ -22,6 +22,14 @@ const updateQuestion = (payload: any): Promise<ApiResponse<unknown>> => axiosCli
 const getQuizzByCode = (code: string, type: 'find' | 'code' = 'find'): Promise<ApiResponse<ExamModel>> => axiosClient.get(`/quizz/${type}/${code}`)
 
 const saveUserAnswer = (payload: UserAnswersModel[]): Promise<ApiResponse<unknown>> => axiosClient.post(`/user-answer/save-answer`, payload)
+const saveUserMark = (payload: {quizzId: string}): Promise<ApiResponse<unknown>> => axiosClient.post(`/user-mark/save`, payload)
+
+
+const getRecentResult = (quizzId: string): Promise<ApiResponse<{
+  "totalNumberOfCorrectAnswers": number,
+  "totalNumberOfAnswers": number,
+  "totalMark": number
+}>> => axiosClient.get(`/correct-answer/show/${quizzId}`)
 
 
 const ExamService = {
@@ -35,6 +43,8 @@ const ExamService = {
   updateQuestion,
   getQuizzByCode,
   saveUserAnswer,
+  saveUserMark,
+  getRecentResult,
 }
 
 export default ExamService

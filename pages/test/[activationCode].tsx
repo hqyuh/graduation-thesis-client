@@ -45,7 +45,7 @@ const Index: NextPageWithLayout = () =>{
   })
   useEffect(() => {
     if(activationCode){
-      ExamService.getQuizzByCode(activationCode as string)
+      ExamService.getQuizzByCode(activationCode as string, 'code')
       .then((res) => {
         setQuizz(res.data)
         const newQues = res.data.questions.map((ques: QuestionModel) => {
@@ -73,7 +73,7 @@ const Index: NextPageWithLayout = () =>{
         <AnswerContainer content={ques.topicQuestion} index={index} key={ques.id} id={ques.id} type="exam">
           {ques.type === QUESTION_TYPE.Essay ? (
             <EssayAnswer onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
-              setFieldValue(`answer[${index}]`, {quizzId: quizz?.id, questionId: ques.id, shortAnswer: event.target.value, type: ques.type}, false)
+              setFieldValue(`answers[${index}]`, {quizzId: quizz?.id, questionId: ques.id, shortAnswer: event.target.value, type: ques.type}, false)
             }} />
           ) : (
             <CheckBoxAnswer
