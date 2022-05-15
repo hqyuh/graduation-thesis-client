@@ -87,7 +87,7 @@ const Index: NextPageWithLayout = () => {
   const router = useRouter()
   const { id } = router.query
   useEffect(() => {
-    ExamService.getOneQuizz(id as string)
+    id && ExamService.getOneQuizz(id as string)
       .then((res) => {
         setSelectedQuizz(res.data)
         const newQues = res.data?.questions.map((ques: QuestionModel) => {
@@ -126,7 +126,7 @@ const Index: NextPageWithLayout = () => {
       .catch(() => toast.error('Cập nhât hỏi thất bại!'))
     }
     else {
-      ExamService.createQuestion({ ...values, ...mapAnswersToProps, correctResult, id })
+      ExamService.createQuestion({ ...values, ...mapAnswersToProps, correctResult, quizzId: id })
       .then(() => {
         toast.success('Tạo câu hỏi thành công')
       })
