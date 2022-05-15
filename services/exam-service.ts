@@ -19,7 +19,7 @@ const deleteQuestion = (id: string): Promise<ApiResponse<unknown>> => axiosClien
 
 const updateQuestion = (payload: any): Promise<ApiResponse<unknown>> => axiosClient.patch(`/question/update`, payload)
 
-const getQuizzByCode = (code: string): Promise<ApiResponse<ExamModel>> => axiosClient.get(`/question/code/${code}`)
+const getQuizzByCode = (code: string, type: 'find' | 'code' = 'find'): Promise<ApiResponse<ExamModel>> => axiosClient.get(`/question/${type}/${code}`)
 
 const saveUserAnswer = (payload: UserAnswersModel[]): Promise<ApiResponse<unknown>> => axiosClient.post(`/user-answer/save-answer`, payload)
 
