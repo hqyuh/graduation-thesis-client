@@ -40,3 +40,45 @@ a {
 .z-up {
   z-index: 9999!important;
 }
+
+.home-page-content {
+  height: 100vh !important;
+  background-color: #F2F2F2 !important;
+}
+.content1 {
+  background-color: #ffffff;
+  height: 202px;
+  span {
+      width: 489px !important;
+      background-color: #E7E7E7;
+  }
+  input {
+      width: 371px !important;
+  }
+  .btn-join {
+      background-color: #8F60DE;
+      color: #ffffff;
+  }
+}
+.content2 {
+  height: 202px;
+  background-color: #ffffff;
+  margin-right: 24px;
+  margin-top: 24px;
+  .btn-create-account {
+      height: 40px;
+  }
+  .btn svg {
+      margin-right: 8px;
+  }
+  .btn-login {
+      font-size: 12px;
+      height: 23px;
+  }
+  .btn-register {
+      background-color: #8F60DE;
+      color: #ffffff;
+      font-size: 12px;
+      height: 23px;
+  }
+}

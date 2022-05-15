@@ -2,6 +2,7 @@ import { UserAnswersModel } from './../pages/test/[activationCode]';
 import { ExamFormModel } from "../components/UpdateSubjectForm/index";
 import { ApiResponse, axiosClient } from '../lib/client'
 import { ExamModel } from '../models/exam.model'
+import { MarkModel } from '../pages/mark-management';
 
 const getAllTopic = (): Promise<ApiResponse<ExamModel[]>> => axiosClient.get('/quizz/list')
 
@@ -22,6 +23,7 @@ const updateQuestion = (payload: any): Promise<ApiResponse<unknown>> => axiosCli
 const getQuizzByCode = (code: string, type: 'find' | 'code' = 'find'): Promise<ApiResponse<ExamModel>> => axiosClient.get(`/quizz/${type}/${code}`)
 
 const saveUserAnswer = (payload: UserAnswersModel[]): Promise<ApiResponse<unknown>> => axiosClient.post(`/user-answer/save-answer`, payload)
+
 const saveUserMark = (payload: {quizzId: string}): Promise<ApiResponse<unknown>> => axiosClient.post(`/user-mark/save`, payload)
 
 
@@ -30,6 +32,11 @@ const getRecentResult = (quizzId: string): Promise<ApiResponse<{
   "totalNumberOfAnswers": number,
   "totalMark": number
 }>> => axiosClient.get(`/correct-answer/show/${quizzId}`)
+
+
+const getMarkByStudent = (username: string): Promise<ApiResponse<MarkModel[]>> => axiosClient.get(`/user-mark/user/${username}`)
+
+const getMarkByQuizzId = (quizzId: string): Promise<ApiResponse<MarkModel[]>> => axiosClient.get(`/user-mark/quizz/${quizzId}`)
 
 
 const ExamService = {
@@ -45,6 +52,8 @@ const ExamService = {
   saveUserAnswer,
   saveUserMark,
   getRecentResult,
+  getMarkByStudent,
+  getMarkByQuizzId,
 }
 
 export default ExamService

@@ -35,7 +35,7 @@ const Index: NextPageWithLayout = () =>{
     },
     onSubmit: (values) => {
       ExamService.saveUserAnswer(values.answers).then(()=> {
-        router.replace(`/test/success/id=${quizz?.id}`)
+        router.replace(`/test/success/?id=${quizz?.id}`)
         toast.success('Cám ơn bạn đã tham gia làm bài thi')
         removeFromLocalStorage('answers')
       }).catch(()=> {
@@ -61,7 +61,10 @@ const Index: NextPageWithLayout = () =>{
           saveToLocalStorage('answers', formik.values)
         }
       })
-      .catch(() => toast.error('Không thể lấy danh sách câu hỏi'))
+      .catch(() => {
+        router.replace('/')
+        toast.error('Không thể lấy danh sách câu hỏi')
+      })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activationCode])

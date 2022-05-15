@@ -33,7 +33,7 @@ const Sidebar: React.FC = () => {
       {
         icon: <MarkManagementIcon />,
         label: t('mark_manage'),
-        router: '/mark',
+        router: '/mark-management',
       },
       {
         icon: <ClassIcon />,

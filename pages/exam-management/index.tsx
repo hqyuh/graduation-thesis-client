@@ -168,6 +168,11 @@ const ExamManagementPage: NextPageWithLayout = () => {
             }}>
               Tạo câu hỏi
             </button>
+            <button type="button" className="btn btn-primary text-white w-50 mt-2" onClick={()=> {
+              router.push(`/mark-management/?id=${selectedSubject.id || 'not-found'}`)
+            }}>
+              Xem điểm
+            </button>
           </div>
         </Subject>
       </ConfirmExamModal>
