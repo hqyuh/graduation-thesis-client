@@ -40,16 +40,15 @@ const Index: NextPageWithLayout = () => {
   const router = useRouter()
   const { currentUser } = useAuth()
   useEffect(() => {
-    
-      if (currentUser?.role === UserRole.ROLE_ADMIN) {
+      console.log(currentUser)
+      if (currentUser?.roles === UserRole.ROLE_ADMIN) {
         ExamService.getListUser().then((res) => {
           setUsers(res.data)
         })
     } else {
-        router.replace('/home')
+        // router.replace('/home')
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [currentUser])
   const cols = [
     {
       field: 'username',

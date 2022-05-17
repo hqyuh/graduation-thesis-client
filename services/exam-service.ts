@@ -44,7 +44,7 @@ const blockWatchMark = (userId: number, isLocked: boolean): Promise<ApiResponse<
 const getListUser = (): Promise<ApiResponse<UserManagementModel[]>> => axiosClient.get(`/user/list`)
 
 
-const blockUser = (userId: number, isLocked: boolean): Promise<ApiResponse<unknown>> => axiosClient.get(`/user/${userId}/lock/${isLocked}`)
+const blockUser = (userId: number, isLocked: boolean): Promise<ApiResponse<unknown>> => axiosClient.get(`/user/${userId}/locked/${isLocked}`)
 
 
 const ExamService = {
