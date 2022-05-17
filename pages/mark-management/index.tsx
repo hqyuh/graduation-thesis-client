@@ -20,6 +20,7 @@ export interface MarkModel {
   username: string
   userId: number
   quizzId: number
+  point_lock: boolean
 }
 
 const Index: NextPageWithLayout = () => {
@@ -29,7 +30,7 @@ const Index: NextPageWithLayout = () => {
   const { id } = router.query
   useEffect(() => {
     if (!id) {
-      if (currentUser?.role === UserRole.ROLE_USER) {
+      if (currentUser?.roles === UserRole.ROLE_USER) {
         ExamService.getMarkByStudent(currentUser.username).then((res) => {
           setMarks(res.data)
         })
@@ -79,10 +80,13 @@ const Index: NextPageWithLayout = () => {
               <InputSwitch onChange={(e: InputSwitchChangeParams) => {
                 ExamService.blockWatchMark(rowData.userId, e.target.value).then(() => {
                   toast.success(`Đã khóa quyền xem điểm của ${rowData.username}`)
+                  ExamService.getMarkByStudent(currentUser.username).then((res) => {
+                    setMarks(res.data)
+                  })
                 }).catch(()=> {
                   toast.error(`Khóa quyền xem điểm của ${rowData.username} thất bại`)
                 })
-              }}/>
+              }} checked={rowData.point_lock}/>
               <span>Allow</span>
             </>
 )          }

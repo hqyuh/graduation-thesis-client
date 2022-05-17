@@ -18,7 +18,7 @@ export enum UserRole {
 }
 export interface CurrentUserModel extends Omit<UserSignUp, 'password'>{
     created_at: string;
-    role: keyof typeof UserRole
+    roles: keyof typeof UserRole
 }
 
 export interface AuthContextApi {

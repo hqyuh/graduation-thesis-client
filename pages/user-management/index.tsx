@@ -40,15 +40,14 @@ const Index: NextPageWithLayout = () => {
   const router = useRouter()
   const { currentUser } = useAuth()
   useEffect(() => {
-      console.log(currentUser)
       if (currentUser?.roles === UserRole.ROLE_ADMIN) {
         ExamService.getListUser().then((res) => {
           setUsers(res.data)
         })
     } else {
-        // router.replace('/home')
+        router.replace('/home')
     }
-  }, [currentUser])
+  }, [currentUser, router])
   const cols = [
     {
       field: 'username',
@@ -86,10 +85,13 @@ const Index: NextPageWithLayout = () => {
               <InputSwitch onChange={(e: InputSwitchChangeParams) => {
                 ExamService.blockUser(rowData.id, e.target.value).then(() => {
                   toast.success(`Đã khóa ${rowData.username}`)
+                    ExamService.getListUser().then((res) => {
+                      setUsers(res.data)
+                    })
                 }).catch(()=> {
                   toast.error(`Khóa ${rowData.username} thất bại`)
                 })
-              }}/>
+              }} checked={rowData.notLocked}/>
               <span>Allow</span>
             </>
 )          }
