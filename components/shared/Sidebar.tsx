@@ -43,7 +43,7 @@ const Sidebar: React.FC = () => {
       {
         icon: <AccountIcon />,
         label: t('account_manage'),
-        router: '/account',
+        router: '/user-management',
       },
       {
         icon: <UserIcon />,

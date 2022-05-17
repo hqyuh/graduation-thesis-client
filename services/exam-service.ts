@@ -3,6 +3,7 @@ import { ExamFormModel } from "../components/UpdateSubjectForm/index";
 import { ApiResponse, axiosClient } from '../lib/client'
 import { ExamModel } from '../models/exam.model'
 import { MarkModel } from '../pages/mark-management';
+import { UserManagementModel } from '../pages/user-management';
 
 const getAllTopic = (): Promise<ApiResponse<ExamModel[]>> => axiosClient.get('/quizz/list')
 
@@ -38,6 +39,13 @@ const getMarkByStudent = (username: string): Promise<ApiResponse<MarkModel[]>> =
 
 const getMarkByQuizzId = (quizzId: string): Promise<ApiResponse<MarkModel[]>> => axiosClient.get(`/user-mark/quizz/${quizzId}`)
 
+const blockWatchMark = (userId: number, isLocked: boolean): Promise<ApiResponse<unknown>> => axiosClient.get(`/user-mark/${userId}/lock/${isLocked}`)
+
+const getListUser = (): Promise<ApiResponse<UserManagementModel[]>> => axiosClient.get(`/user/list`)
+
+
+const blockUser = (userId: number, isLocked: boolean): Promise<ApiResponse<unknown>> => axiosClient.get(`/user/${userId}/lock/${isLocked}`)
+
 
 const ExamService = {
   getAllTopic,
@@ -54,6 +62,9 @@ const ExamService = {
   getRecentResult,
   getMarkByStudent,
   getMarkByQuizzId,
+  blockWatchMark,
+  getListUser,
+  blockUser,
 }
 
 export default ExamService

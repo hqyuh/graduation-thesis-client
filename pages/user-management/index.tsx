@@ -12,58 +12,66 @@ import { InputSwitch, InputSwitchChangeParams } from 'primereact/inputswitch'
 // eslint-disable-next-line import/no-cycle
 import ExamService from '../../services/exam-service'
 
-export interface MarkModel {
+   
+  export type UserAuthorities = ['user:create', 'user:delete', 'user:read', 'user:update']
+
+export interface UserManagementModel {
   id: number
-  mark: number
-  completedDate: string
-  quizzName: string
+  firstName: string
+  lastName: string
   username: string
-  userId: number
-  quizzId: number
+  email: string
+  phoneNumber: string | null
+  dateOfBirth: null
+  profileImageUrl: string
+  lastLogin: string
+  lastLoginDateDisplay: string
+  joinDate: string
+  roles: keyof typeof UserRole
+  authorities: UserAuthorities
+  authType: null
+  notLocked: boolean
+  active: boolean
 }
 
+
 const Index: NextPageWithLayout = () => {
-  const [marks, setMarks] = useState<MarkModel[]>([])
+  const [users, setUsers] = useState<UserManagementModel[]>([])
   const router = useRouter()
   const { currentUser } = useAuth()
-  const { id } = router.query
   useEffect(() => {
-    if (!id) {
-      if (currentUser?.role === UserRole.ROLE_USER) {
-        ExamService.getMarkByStudent(currentUser.username).then((res) => {
-          setMarks(res.data)
+    
+      if (currentUser?.role === UserRole.ROLE_ADMIN) {
+        ExamService.getListUser().then((res) => {
+          setUsers(res.data)
         })
-      }
     } else {
-      ExamService.getMarkByQuizzId(id)
-        .then((res) => {
-          setMarks(res.data)
-        })
-        .catch((res) => toast.error(res.message))
+        router.replace('/home')
     }
-  }, [id, currentUser])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   const cols = [
     {
       field: 'username',
       header: 'Username',
     },
     {
-      field: 'quizzName',
-      header: 'Bài thi',
+      field: 'email',
+      header: 'Email',
     },
     {
-      field: 'mark',
-      header: 'Điểm',
+      field: 'roles',
+      header: 'Loại',
     },
     {
-      field: 'completedDate',
-      header: 'Hoàn thành',
+      field: 'lastLogin',
+      header: 'Lần cuối đăng nhập',
     },
   ]
   return (
     <div className="px-3">
       <DataTable
-        value={marks}
+        value={users}
         responsiveLayout="scroll"
         paginator
         rows={10}
@@ -72,15 +80,15 @@ const Index: NextPageWithLayout = () => {
           <Column key={col.field} field={col.field} header={col.header} sortField={col.field} sortable filter />
         ))}
         <Column
-          header="Xem điểm"
+          header="Quyền"
           body={
-            (rowData: MarkModel) => (<>
+            (rowData: UserManagementModel) => (<>
               <span>Block</span>
               <InputSwitch onChange={(e: InputSwitchChangeParams) => {
-                ExamService.blockWatchMark(rowData.userId, e.target.value).then(() => {
-                  toast.success(`Đã khóa quyền xem điểm của ${rowData.username}`)
+                ExamService.blockUser(rowData.id, e.target.value).then(() => {
+                  toast.success(`Đã khóa ${rowData.username}`)
                 }).catch(()=> {
-                  toast.error(`Khóa quyền xem điểm của ${rowData.username} thất bại`)
+                  toast.error(`Khóa ${rowData.username} thất bại`)
                 })
               }}/>
               <span>Allow</span>
