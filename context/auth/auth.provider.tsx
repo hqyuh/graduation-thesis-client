@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import { NO_AUTHORIZE_PATHNAME } from '../../constants'
 import { ApiResponse } from '../../lib/client'
 import authServices from './auth-service'
-import { AuthContextApi, CurrentUserModel, UserSignIn, UserSignUp } from './auth.types'
+import { AuthContextApi, CurrentUserModel, UserRole, UserSignIn, UserSignUp } from './auth.types'
 
 const AuthContext = createContext<AuthContextApi>({} as AuthContextApi)
 
@@ -38,7 +38,11 @@ const AuthProvider: React.FC = ({ children }) => {
       .then((res) => {
         setCurrentUser(res.data)
         toast.success('Welcome to quizz online')
+        if(res.data.role === UserRole.ROLE_USER){
         router.replace('/')
+        } else {
+          router.replace('/exam-management')
+        }
       })
       .catch((res) => {
         toast.error(res.message)

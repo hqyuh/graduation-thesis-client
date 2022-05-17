@@ -60,13 +60,9 @@ const Index: NextPageWithLayout = () => {
   ]
   return (
     <div className="px-3">
-      <DataTable value={marks} responsiveLayout="scroll">
+      <DataTable value={marks} responsiveLayout="scroll" paginator rows={10} paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown">
         {cols.map((col) => <Column key={col.field} field={col.field} header={col.header}  sortField={col.field} sortable filter/>)}
-        <Column header="Xem điểm">
-          <span>Block</span>
-        <InputSwitch />
-        <span>Allow</span>
-        </Column>
+        <Column header="Xem điểm" body={<><span>Block</span><InputSwitch /><span>Allow</span></>} />
       </DataTable>
     </div>
   )

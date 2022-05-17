@@ -25,7 +25,7 @@ const HomePage: NextPage = () => {
         <div className="d-flex h-100">
           <LogoHomePage />
           <Search />
-          <Link href="">
+          <Link href="/exam-management">
             <a
               role="button"
               className="home-item nav-item mx-3 d-flex justify-content-center align-items-center fw-bold">
