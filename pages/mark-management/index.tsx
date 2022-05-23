@@ -72,25 +72,32 @@ const Index: NextPageWithLayout = () => {
         {cols.map((col) => (
           <Column key={col.field} field={col.field} header={col.header} sortField={col.field} sortable filter />
         ))}
-        <Column
-          header="Xem điểm"
-          body={
-            (rowData: MarkModel) => (<>
-              <span>Block</span>
-              <InputSwitch onChange={(e: InputSwitchChangeParams) => {
-                ExamService.blockWatchMark(rowData.userId, e.target.value).then(() => {
-                  toast.success(`Đã khóa quyền xem điểm của ${rowData.username}`)
-                  ExamService.getMarkByStudent(currentUser.username).then((res) => {
-                    setMarks(res.data)
-                  })
-                }).catch(()=> {
-                  toast.error(`Khóa quyền xem điểm của ${rowData.username} thất bại`)
-                })
-              }} checked={rowData.point_lock}/>
-              <span>Allow</span>
-            </>
-)          }
-        />
+        {currentUser?.roles !== UserRole.ROLE_USER && (
+          <Column
+            header="Xem điểm"
+            body={(rowData: MarkModel) => (
+              <>
+                <span>Block</span>
+                <InputSwitch
+                  onChange={(e: InputSwitchChangeParams) => {
+                    ExamService.blockWatchMark(rowData.userId, e.target.value)
+                      .then(() => {
+                        toast.success(`Đã khóa quyền xem điểm của ${rowData.username}`)
+                        ExamService.getMarkByStudent(currentUser.username).then((res) => {
+                          setMarks(res.data)
+                        })
+                      })
+                      .catch(() => {
+                        toast.error(`Khóa quyền xem điểm của ${rowData.username} thất bại`)
+                      })
+                  }}
+                  checked={rowData.point_lock}
+                />
+                <span>Allow</span>
+              </>
+            )}
+          />
+        )}
       </DataTable>
     </div>
   )

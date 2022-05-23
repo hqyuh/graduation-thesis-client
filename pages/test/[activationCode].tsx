@@ -92,7 +92,7 @@ const Index: NextPageWithLayout = () =>{
     })
     return () => {
       clearTimeout(timeRef.current)
-      document.removeEventListener('visibilitychange')
+      document.removeEventListener('visibilitychange', console.log)
     }
   },[])
   const {setFieldValue} = formik

@@ -86,7 +86,7 @@ const Index: NextPageWithLayout = () => {
                 ExamService.blockUser(rowData.id, e.target.value).then(() => {
                   toast.success(`Đã khóa ${rowData.username}`)
                     ExamService.getListUser().then((res) => {
-                      setUsers(res.data)
+                      setUsers(res.message)
                     })
                 }).catch(()=> {
                   toast.error(`Khóa ${rowData.username} thất bại`)
