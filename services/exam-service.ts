@@ -49,6 +49,9 @@ const blockUser = (userId: number, isLocked: boolean): Promise<ApiResponse<unkno
 
 const patchMe = (user: CurrentUserModel): Promise<ApiResponse<CurrentUserModel>> => axiosClient.post(`/user/me`, user)
 
+const blockTest = (testId: number, isLocked: boolean): Promise<ApiResponse<unknown>> => axiosClient.get(`/quizz/${testId}/lock/${isLocked}`)
+
+
 
 const ExamService = {
   getAllTopic,
@@ -69,6 +72,7 @@ const ExamService = {
   getListUser,
   blockUser,
   patchMe,
+  blockTest,
 }
 
 export default ExamService

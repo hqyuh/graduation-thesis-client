@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useFormik } from 'formik'
 import { useRouter } from 'next/router'
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import AnswerContainer from '../../components/AnswerContainer'
 import CheckBoxAnswer from '../../components/CheckBoxAnswer'
@@ -29,6 +29,7 @@ export interface UserAnswersModel {
 const Index: NextPageWithLayout = () =>{ 
   const [initialQuestion, setInitialQuestion] = useState([])
   const [quizz,setQuizz] = useState<ExamModel>({})
+  let timeRef = useRef(null)
   const router = useRouter()
   const { activationCode } = router.query
   const formik = useFormik<{ answers: UserAnswersModel[]}>({
@@ -64,13 +65,32 @@ const Index: NextPageWithLayout = () =>{
         }
       })
       .catch(() => {
-        router.replace('/')
+        // router.replace('/')
         toast.error('Không thể lấy danh sách câu hỏi')
       })
     } 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activationCode])
 
+  useEffect(()=> {
+    document.addEventListener('visibilitychange', ()=> {
+      if(document.visibilityState === 'hidden'){
+        toast.error('Vui lòng quay lại bài thi sau 10s nếu không bạn sẽ bị cấm thi')
+       timeRef.current = setTimeout(()=> {
+         ExamService.blockTest(quizz.id as number, true).then(()=> {
+           toast.error('Bạn đã bị khóa bài thi')
+         }).finally(()=> {
+          router.replace('/')
+         })
+       }, 10000)
+      } else if(document.visibilityState === 'visible') {
+        clearTimeout(timeRef?.current)
+      }
+    })
+    return () => {
+      clearTimeout(timeRef.current)
+    }
+  },[])
   const {setFieldValue} = formik
   return (
     <div className="p-3">
