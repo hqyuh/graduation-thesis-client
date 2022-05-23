@@ -55,11 +55,13 @@ const AuthProvider: React.FC = ({ children }) => {
       .then((res) => {
         toast.success(res.message)
         setCurrentUser(res.data)
-        router.push('/login')
       })
       .catch((res) => {
         toast.error(res.message)
         setError(res.message)
+      }).finally(()=> {
+        router.push('/login')
+
       })
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
