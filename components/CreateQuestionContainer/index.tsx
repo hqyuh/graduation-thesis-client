@@ -58,7 +58,7 @@ const CreateQuestionContainer: React.FC<Props> = ({ initialValues, onSubmit }) =
   }
   return (
     <>
-      <div className="bg py-4 px-3 create-question-container">
+      <div className="bg py-4 px-3 create-question-container h-75">
         <div className="create-question d-flex justify-content-center align-items-center position-relative">
           <div className="dropdown">
             <Dropdown

@@ -8,6 +8,8 @@ import { toast } from 'react-toastify'
 import ConfirmExamModal from '../../components/ConfirmExamModal'
 import Subject from '../../components/Subject'
 import UpdateSubjectForm, { ExamFormModel } from '../../components/UpdateSubjectForm'
+import { useAuth } from '../../context/auth/auth.provider'
+import { UserRole } from '../../context/auth/auth.types'
 import withAuth from '../../hocs/withAuth'
 import useToggle from '../../hooks/useToggle'
 import { ExamModel } from '../../models/exam.model'
@@ -48,19 +50,24 @@ const ExamManagementPage: NextPageWithLayout = () => {
   const { toggle: toggleUpdate, value: isUpdateOpen } = useToggle(false)
   const { toggle: toggleCreate, value: isCreateOpen } = useToggle(false)
   const { toggle, value } = useToggle(false)
+  const {currentUser} = useAuth()
   const [selectedSubject, setSelectedSubject] = useState<ExamModel>({} as ExamModel)
   const [subjects, setSubjects] = useState<ExamModel[]>([])
   const [updateSubject, setUpdateSubject] = useState({})
   const router = useRouter()
   useEffect(() => {
-    ExamService.getAllTopic()
+    if(currentUser?.roles === UserRole.ROLE_USER){
+      toast.error('Bạn không có quyền truy cập trang này')
+    } else {
+      ExamService.getAllTopic()
       .then((res) => {
         setSubjects(res.data)
       })
       .catch((res) => {
         toast.error(res.message)
       })
-  }, [])
+    }
+  }, [currentUser])
 
   const onDeleteClick = (id: string) => {
     confirmDialog({

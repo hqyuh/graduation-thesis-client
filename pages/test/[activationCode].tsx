@@ -7,6 +7,8 @@ import AnswerContainer from '../../components/AnswerContainer'
 import CheckBoxAnswer from '../../components/CheckBoxAnswer'
 import EssayAnswer from '../../components/EssayAnswer/indext'
 import { QUESTION_TYPE } from '../../constants'
+import { useAuth } from '../../context/auth/auth.provider'
+import { UserRole } from '../../context/auth/auth.types'
 import withAuth from '../../hocs/withAuth'
 import { loadFromLocalStorage, removeFromLocalStorage, saveToLocalStorage } from '../../lib/localStorage'
 import { ExamModel, QuestionModel } from '../../models/exam.model'
@@ -65,7 +67,7 @@ const Index: NextPageWithLayout = () =>{
         router.replace('/')
         toast.error('Không thể lấy danh sách câu hỏi')
       })
-    }
+    } 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activationCode])
 

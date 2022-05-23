@@ -38,7 +38,7 @@ const AuthProvider: React.FC = ({ children }) => {
       .then((res) => {
         setCurrentUser(res.data)
         toast.success('Welcome to quizz online')
-        if(res.data.role === UserRole.ROLE_USER){
+        if(res.data.roles === UserRole.ROLE_USER){
         router.replace('/')
         } else {
           router.replace('/exam-management')
@@ -55,6 +55,7 @@ const AuthProvider: React.FC = ({ children }) => {
       .then((res) => {
         toast.success(res.message)
         setCurrentUser(res.data)
+        router.push('/login')
       })
       .catch((res) => {
         toast.error(res.message)

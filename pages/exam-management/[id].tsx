@@ -6,6 +6,8 @@ import CheckBoxAnswer from '../../components/CheckBoxAnswer'
 import CreateQuestionContainer, { CreateQuestionForm } from '../../components/CreateQuestionContainer'
 import EssayAnswer from '../../components/EssayAnswer/indext'
 import { ANSWER_TITLE_ENUM, QUESTION_TYPE } from '../../constants'
+import { useAuth } from '../../context/auth/auth.provider'
+import { UserRole } from '../../context/auth/auth.types'
 import withAuth from '../../hocs/withAuth'
 import { ExamModel, QuestionModel } from '../../models/exam.model'
 import ExamService from '../../services/exam-service'
@@ -86,8 +88,12 @@ const Index: NextPageWithLayout = () => {
   const [initialQuestion, setInialQuestion] = useState([initialValues])
   const router = useRouter()
   const { id } = router.query
+  const { currentUser } = useAuth()
   useEffect(() => {
-    id && ExamService.getOneQuizz(id as string)
+    if(currentUser?.roles === UserRole.ROLE_USER){
+      toast.error('Bạn không có quyền truy cập')
+    } else {
+      id && ExamService.getOneQuizz(id as string)
       .then((res) => {
         setSelectedQuizz(res.data)
         const newQues = res.data?.questions.map((ques: QuestionModel) => {
@@ -102,6 +108,7 @@ const Index: NextPageWithLayout = () => {
         setInialQuestion(newQues)
       })
       .catch(() => toast.error('Không thể lấy danh sách câu hỏi'))
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
   const onSubmit = (values: CreateQuestionForm) => {
