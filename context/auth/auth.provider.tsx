@@ -55,6 +55,7 @@ const AuthProvider: React.FC = ({ children }) => {
       .then((res) => {
         toast.success(res.message)
         setCurrentUser(res.data)
+        toast.success(res.message)
       })
       .catch((res) => {
         toast.error(res.message)

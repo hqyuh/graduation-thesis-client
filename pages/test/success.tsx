@@ -65,7 +65,7 @@ const Index: NextPageWithLayout = () => {
     <div className="body">
       <div className="block text-center py-4">
         <p className="card-subtitle">
-          Số điểm của bạn là: <span className="text-center font-weight-500 text-success">{mark?.totalNumberOfCorrectAnswers}</span>
+          Số điểm của bạn là: <span className="text-center font-weight-500 text-success">{mark?.totalNumberOfCorrectAnswers}/{mark?.totalNumberOfAnswers} câu</span>
         </p>
       </div>
     </div>

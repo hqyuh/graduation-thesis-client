@@ -23,7 +23,7 @@ const Header: React.FC = () => {
     <header className="bg-white navbar navbar-expand-lg sticky-top navbar-dark flex-md-nowrap shadow py-4 px-3">
       <div className="d-flex justify-content-between w-100 align-items-center">
         <h4 className="font-weight-300 font-size-20 text-dark">
-          {HEADER_TITLE_ENUM[router.pathname as keyof typeof HEADER_TITLE_ENUM] || 
+          {(router.pathname.startsWith('/test') && 'Làm bài thi') || HEADER_TITLE_ENUM[router.pathname as keyof typeof HEADER_TITLE_ENUM] || 
           'Quản lý bài thi'} 
         </h4>
         <SplitButton
