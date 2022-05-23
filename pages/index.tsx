@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { NextPage } from 'next'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ActivityIcon from '../icons/ActivityIcon'
 import ClassesIcon from '../icons/ClassesIcon'
 import HomeIcon from '../icons/HomeIcon'
@@ -11,6 +11,7 @@ import Search from '../components/Search'
 import { useRouter } from 'next/router'
 import { InputText } from 'primereact/inputtext'
 import PeopleIcon from '../icons/PeopleIcon'
+import { useAuth } from '../context/auth/auth.provider'
 
 const HomePage: NextPage = () => {
   const [code,setCode] = useState('')
@@ -18,6 +19,12 @@ const HomePage: NextPage = () => {
   const handleExam = () => {
     router.replace(`/test/${code}`)
   }
+  const {currentUser} = useAuth()
+  useEffect(()=> {
+    if(!currentUser){
+      router.push('/login')
+    }
+  },[])
   return (
    <main>
       <div className="home-page d-flex align-items-center text-muted shadow w-100">
@@ -50,11 +57,11 @@ const HomePage: NextPage = () => {
             </a>
           </Link>
         </div>
-        <div className="d-flex align-items-center">
+        {/* <div className="d-flex align-items-center">
           <button className="btn-login btn btn-secondary rounded-10 fw-bold mx-2" type="button" onClick={()=> router.push('/login')}>Login</button>
           <button className="btn-register btn btn-secondary rounded-10 fw-bold mx-2" type="button" onClick={() => router.push('/register')}>Register</button>
           <SettingIcon />
-        </div>
+        </div> */}
       </header>
     </div>
     <div className="home-page-content d-flex justify-content-between">

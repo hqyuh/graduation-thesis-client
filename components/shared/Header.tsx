@@ -2,9 +2,10 @@ import { useRouter } from 'next/router'
 import { MenuItem } from 'primereact/menuitem/menuitem'
 import { SplitButton } from 'primereact/splitbutton'
 import React, { useMemo } from 'react'
-import { HEADER_TITLE_ENUM } from '../../constants'
+import { ACCESS_TOKEN_KEY, HEADER_TITLE_ENUM } from '../../constants'
 import { useAuth } from '../../context/auth/auth.provider'
 import { useTranslations } from '../../context/Localization'
+import { removeFromLocalStorage } from '../../lib/localStorage'
 
 const Header: React.FC = () => {
   const { currentUser } = useAuth()
@@ -15,6 +16,9 @@ const Header: React.FC = () => {
       {
         label: t('logout'),
         icon: 'pi pi-power-off',
+        command: () => {
+          removeFromLocalStorage(ACCESS_TOKEN_KEY)
+        }
       },
     ],
     [t],
