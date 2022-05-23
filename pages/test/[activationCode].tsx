@@ -50,6 +50,9 @@ const Index: NextPageWithLayout = () =>{
     if(activationCode){
       ExamService.getQuizzByCode(activationCode as string, 'code')
       .then((res) => {
+        if(res.data.pointBLock === true){
+          router.replace('/')
+        }
         setQuizz(res.data)
         const newQues = res.data.questions.map((ques: QuestionModel) => {
           const { answerA, answerB, answerC, answerD } = ques
