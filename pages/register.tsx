@@ -1,15 +1,17 @@
 /* eslint-disable react/function-component-definition */
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import classNames from 'classnames'
 import { useFormik } from 'formik'
 import { NextPage } from 'next'
 import Link from 'next/link'
+import { InputSwitch, InputSwitchChangeParams } from 'primereact/inputswitch'
 import { Password } from 'primereact/password'
 import React from 'react'
 import * as yup from 'yup'
 import InputWrapper from '../components/InputText'
 import { YUP_MESSAGE } from '../constants'
 import { useAuth } from '../context/auth/auth.provider'
-import { UserSignUp } from '../context/auth/auth.types'
+import { UserRole, UserSignUp } from '../context/auth/auth.types'
 import { useTranslations } from '../context/Localization'
 
 const schema = yup.object().shape({
@@ -26,6 +28,7 @@ const initialValues: UserSignUp = {
   email: '',
   password: '',
   username: '',
+  role: UserRole.ROLE_USER,
 }
 
 const Register: NextPage = () => {
@@ -95,6 +98,18 @@ const Register: NextPage = () => {
           <p className="text-start font-size-12 text-danger mb-0 mt-1">
             {formik.touched?.password && errors?.password}
           </p>
+        </div>
+        <div className="mt-3 mb-3 d-flex align-items-center justify-content-center">
+        <span className={`font-weight-700 ${classNames({'text-primary':  formik.values.role === UserRole.ROLE_USER})}`}>User</span>
+        &nbsp;
+        <InputSwitch
+            onChange={(e: InputSwitchChangeParams) => {
+              formik.setFieldValue('role', e.target.value === true ? UserRole.ROLE_TEACHER : UserRole.ROLE_USER, false)
+            }}
+            checked={formik.values.role === UserRole.ROLE_TEACHER}
+          />
+          &nbsp;
+        <span className={`font-weight-700 ${classNames({'text-primary': formik.values.role === UserRole.ROLE_TEACHER})}`}>Teacher</span>
         </div>
         <div className="form-group">
           <button className="w-100 btn btn-primary mt-4 mb-2 text-white font-weight-900 button" type="submit">

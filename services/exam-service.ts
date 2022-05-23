@@ -1,3 +1,4 @@
+import { CurrentUserModel } from './../context/auth/auth.types';
 import { UserAnswersModel } from './../pages/test/[activationCode]';
 import { ExamFormModel } from "../components/UpdateSubjectForm/index";
 import { ApiResponse, axiosClient } from '../lib/client'
@@ -46,6 +47,8 @@ const getListUser = (): Promise<ApiResponse<UserManagementModel[]>> => axiosClie
 
 const blockUser = (userId: number, isLocked: boolean): Promise<ApiResponse<unknown>> => axiosClient.get(`/user/${userId}/locked/${isLocked}`)
 
+const patchMe = (user: CurrentUserModel): Promise<ApiResponse<CurrentUserModel>> => axiosClient.post(`/user/me`, user)
+
 
 const ExamService = {
   getAllTopic,
@@ -65,6 +68,7 @@ const ExamService = {
   blockWatchMark,
   getListUser,
   blockUser,
+  patchMe,
 }
 
 export default ExamService

@@ -5,6 +5,8 @@
 @import './login.style.scss';
 @import './homepage.style';
 @import './homepagesearch.style';
+@import './homepagecontent.style';
+@import './setting.style';
 @import "primereact/resources/primereact.min.css";                  //core css
 @import "primeicons/primeicons.css"; 
 @import "primereact/resources/themes/saga-blue/theme.css"; 
@@ -14,7 +16,9 @@
 @import './components/error';
 @import './components/subject';
 @import './components/question';
+@import 'antd/dist/antd.css';
 
+  
 html,
 body {
   width: 100%;
@@ -25,6 +29,9 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
   background-color: white !important;
+}
+main {
+  background-color: #F2F2F2;
 }
 
 a {

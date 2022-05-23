@@ -19,6 +19,10 @@ export enum RESPONSE_TYPE_ENUM {
 export enum HEADER_TITLE_ENUM {
   '/exam-management' = 'Quản lý đề thi',
   '/exam-management/' = 'Quản lý bài thi',
+  '/setting'= 'Quản lý thông tin cá nhân',
+  '/user-management' = 'Quản lý tài khoản',
+  '/mark-management' = 'Quản lý điểm',
+  '/test' = 'Làm bài thi'
 }
 
 export enum QUESTION_TYPE {
