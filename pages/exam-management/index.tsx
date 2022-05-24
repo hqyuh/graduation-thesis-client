@@ -11,6 +11,7 @@ import UpdateSubjectForm, { ExamFormModel } from '../../components/UpdateSubject
 import { useAuth } from '../../context/auth/auth.provider'
 import { UserRole } from '../../context/auth/auth.types'
 import withAuth from '../../hocs/withAuth'
+import useCopyToClipboard from '../../hooks/useCopyToClipBoard'
 import useToggle from '../../hooks/useToggle'
 import { ExamModel } from '../../models/exam.model'
 import ExamService from '../../services/exam-service'
@@ -54,6 +55,7 @@ const ExamManagementPage: NextPageWithLayout = () => {
   const [selectedSubject, setSelectedSubject] = useState<ExamModel>({} as ExamModel)
   const [subjects, setSubjects] = useState<ExamModel[]>([])
   const [updateSubject, setUpdateSubject] = useState({})
+  const [copyValue, copy] = useCopyToClipboard()
   const router = useRouter()
   useEffect(() => {
     if(currentUser?.roles === UserRole.ROLE_USER){
@@ -179,6 +181,11 @@ const ExamManagementPage: NextPageWithLayout = () => {
               router.push(`/mark-management/?id=${selectedSubject.id || 'not-found'}`)
             }}>
               Xem điểm
+            </button>
+            <button type="button" className="btn btn-primary text-white w-50 mt-2" onClick={()=> {
+              copy(selectedSubject.activationCode)
+            }}>
+              Lấy mã 
             </button>
           </div>
         </Subject>

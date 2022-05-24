@@ -18,6 +18,7 @@ const Header: React.FC = () => {
         icon: 'pi pi-power-off',
         command: () => {
           removeFromLocalStorage(ACCESS_TOKEN_KEY)
+          router.replace('/login')
         }
       },
     ],
